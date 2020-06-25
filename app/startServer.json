@@ -1,0 +1,3 @@
+{
+	"cmd":"uwsgi --http :\"`python randoport.py`\" --master --plugin /usr/lib/uwsgi/python_plugin.so --process 2 --threads 2 --wsgi-file wsgi.py"
+}
