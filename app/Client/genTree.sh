@@ -1,1 +1,1 @@
-echo 'mkdir -p app/Education/{forms,workers} ; touch app/Education/__init__.py ; touch app/Education/workers/__init__.py' | sed s/Education/"$1"/g
+echo 'mkdir -p Education/{forms,workers} ; touch Education/__init__.py ; touch Education/workers/__init__.py' | sed s/Education/"$1"/g
