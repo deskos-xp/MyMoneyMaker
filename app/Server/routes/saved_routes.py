@@ -66,6 +66,15 @@ def get_saved():
     savedes=[savedSchema.dump(i) for i in savedes]
     return status(Saved(),status=status_codes.OBJECTS,objects=Json.dumps(savedes))
 
+@app.route("/saved/get/last",methods=["get"])
+@auth.login_required
+@roles_required(roles=["admin","user"])
+def get_last():
+    last=db.session.query(Saved).all()
+    if last and len(last) > 0:
+        return status(Saved(),status=status_codes.OBJECT,object=SavedSchema().dump(last[-1]))
+    else:
+        return status(Saved(),status="nothing to see!")
 
 @app.route("/saved/new",methods=["post"])
 @auth.login_required

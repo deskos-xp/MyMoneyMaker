@@ -56,7 +56,9 @@ class SavedSchema(ma.SQLAlchemySchema):
             "dollar10",
             "dollar20",
             "dollar50",
-            "dollar100"
+            "dollar100",
+            "id",
+            "date"
             )      
     pennies=ma.auto_field()
     nickels=ma.auto_field()
