@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt,pyqtSlot,QDate
 from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox
 import time
 import phonenumbers
-
+import sys
 class PhoneTextEditDelegate(QItemDelegate):
     def __init__(self,parent):
         QItemDelegate.__init__(self,parent)
@@ -38,12 +38,17 @@ class SpinBoxDelegate(QItemDelegate):
         
     def createEditor(self,parent,option,index):
         date=QSpinBox(parent)
+        date.setMaximum(2147483647)
+        date.setMinimum(-2147483647)
 
         return date
 
     def setEditorData(self,editor,index):
         editor.blockSignals(True)
-        editor.setValue(index.model().data(index))
+        if index.model().data(index) == None:
+            editor.setValue(0)
+        else:            
+            editor.setValue(index.model().data(index))
         editor.blockSignals(False)
 
     def setModelData(self,editor,model,index):

@@ -1,16 +1,16 @@
 from PyQt5.QtCore import QAbstractTableModel,Qt,QModelIndex 
 from PyQt5.QtGui import QColor
 import enum
-class TableModelEnum(enum.Enum):
+class TableModel_editorEnum(enum.Enum):
     READONLY=False
     EDITABLE=True
 
-class TableModel(QAbstractTableModel):
-    def __init__(self,*args,item=None,ReadOnly=TableModelEnum.EDITABLE,**kwargs):
-        super(TableModel,self).__init__()
+class TableModel_editor(QAbstractTableModel):
+    def __init__(self,*args,item=None,ReadOnly=TableModel_editorEnum.EDITABLE,**kwargs):
+        super(TableModel_editor,self).__init__()
         self.item = item or {}
         self.row_count=0
-        self.column_count=2
+        self.column_count=3
         
         self.ReadOnly=ReadOnly
 
@@ -18,10 +18,11 @@ class TableModel(QAbstractTableModel):
         self.init_align()
         self.fields=[]
         self.values=[]
+        self.expression=[]
         self.load_data(item)
 
     def init_align(self):
-        for i in range(2):
+        for i in range(3):
             if i > 0:
                 self.align.append(Qt.AlignCenter)
             else:
@@ -31,11 +32,16 @@ class TableModel(QAbstractTableModel):
         if re == True:
             self.fields.clear()
             self.values.clear()
-            
+            self.expression.clear()
+
         if isinstance(data,dict):
             for k in data.keys():
                 self.fields.append(k)
                 self.values.append(data[k])
+                if isinstance(data[k],int):
+                    self.expression.append(0)
+                elif isinstance(data[k],str):
+                    self.expression.append("")
             #self.column_count=len(self.fields)
             self.row_count=len(self.values)
         print(self.values)
@@ -52,16 +58,18 @@ class TableModel(QAbstractTableModel):
         if role != Qt.DisplayRole:
             return None
         if orientation == Qt.Horizontal:
-            return ("Fields","Values")[section]
+            return ("Fields","Values","Expression")[section]
         else:
             return "{}".format(section)
 
     def flags(self,index):
         baseflags=QAbstractTableModel.flags(self,index)
         if index.column() > 0:
-            if self.ReadOnly == TableModelEnum.READONLY:
+            if self.ReadOnly == TableModel_editorEnum.READONLY:
                 return baseflags
             else:
+                if self.fields[index.row()] == 'date' and index.column() == 2:
+                    return baseflags
                 if self.fields[index.row()] == 'id':
                     return baseflags
                 return baseflags | Qt.ItemIsEditable
@@ -75,7 +83,11 @@ class TableModel(QAbstractTableModel):
             if col == 0:
                 return self.fields[row]
             else:
-                return self.values[row]
+                if col == 1:
+                    return self.values[row]
+                elif col == 2:
+                    return self.expression[row]
+
         elif role == Qt.BackgroundRole:
             return QColor(Qt.white)
         elif role == Qt.TextAlignmentRole:
@@ -88,7 +100,12 @@ class TableModel(QAbstractTableModel):
         if col == 0:
             pass
         else:
-            self.values[row]=value
+            if col == 2:
+                if self.fields[row] not in ['id','date']:
+                    self.values[row]+=value
+                    self.expression[row]=value
+            else:
+                self.values[row]=value
         self.dataChanged.emit(index,index)
         self.tableToDict()
         return True

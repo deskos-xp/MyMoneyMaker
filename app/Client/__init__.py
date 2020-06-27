@@ -4,6 +4,7 @@ from PyQt5 import uic
 from .Loggin.Login import Login
 from .MenuBar.MenuBar import MenuBar
 from .Review.Review import Review
+from .NewEntry.NewEntry import NewEntry
 import os,sys,json
 
 class Main(QMainWindow):
@@ -12,7 +13,6 @@ class Main(QMainWindow):
 
         uic.loadUi("Client/MainWindow/forms/main.ui",self)
        
-        self.menubar=MenuBar(self)
         self.stacks=dict()
         self.user=dict()
         self.stacks['login']=Login(self)
@@ -24,6 +24,9 @@ class Main(QMainWindow):
         self.stacks['login'].signals.hasUser.connect(store)
 
         self.stacks['reviewlast']=Review(self.stacks['login'].user,self)
+        self.stacks['newEntry']=NewEntry(self)
+        self.menubar=MenuBar(self)
+
         print(self.user,"user"*10)
         self.show()
 

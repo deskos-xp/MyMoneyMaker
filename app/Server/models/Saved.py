@@ -3,16 +3,16 @@ from .. import db,ma,auth
 class Saved(db.Model):
     __tablename__="Saved"
     id=db.Column(db.Integer(),primary_key=True)
-    pennies=db.Column(db.Integer())
-    nickels=db.Column(db.Integer())
-    dimes=db.Column(db.Integer())
-    quarters=db.Column(db.Integer())
-    dollar=db.Column(db.Integer())
-    dollar5=db.Column(db.Integer())
-    dollar10=db.Column(db.Integer())
-    dollar20=db.Column(db.Integer())
-    dollar50=db.Column(db.Integer())
-    dollar100=db.Column(db.Integer())
+    pennies=db.Column(db.Integer(),default=0)
+    nickels=db.Column(db.Integer(),default=0)
+    dimes=db.Column(db.Integer(),default=0)
+    quarters=db.Column(db.Integer(),default=0)
+    dollar=db.Column(db.Integer(),default=0)
+    dollar5=db.Column(db.Integer(),default=0)
+    dollar10=db.Column(db.Integer(),default=0)
+    dollar20=db.Column(db.Integer(),default=0)
+    dollar50=db.Column(db.Integer(),default=0)
+    dollar100=db.Column(db.Integer(),default=0)
     date=db.Column(db.String(length=20))
     def __repr__(self):
         return '''

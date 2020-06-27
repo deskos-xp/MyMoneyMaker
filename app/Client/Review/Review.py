@@ -21,6 +21,7 @@ class Review(QWidget):
         self.parent.review.view.setModel(self.model)
         prep_table(self.parent.review.view)
         self.updateTotalLCD()
+        self.parent.tabWidget.currentChanged.connect(parent.review.refresh.click)
 
     def updateTotalLCD(self):
         self.model.layoutChanged.connect(self.handleChanges)
@@ -40,7 +41,18 @@ class Review(QWidget):
                         elif k == "quarters":
                             total+=self.model.item.get(k)*0.25
                     else:
-                        total+=self.model.item.get(k)
+                        if k == "dollar":
+                            total+=self.model.item.get(k)
+                        elif k == "dollar5":
+                            total+=(self.model.item.get(k)*5)
+                        elif k == "dollar10":
+                            total+=(self.model.item.get(k)*10)
+                        elif k == "dollar20":
+                            total+=(self.model.item.get(k)*20)
+                        elif k == "dollar50":
+                            total+=(self.model.item.get(k)*50)
+                        elif k == "dollar100":                        
+                            total+=(self.model.item.get(k)*100)
         self.parent.review.total.display(total)
     
     def hasData(self,data):
