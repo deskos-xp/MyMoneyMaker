@@ -8,6 +8,7 @@ from ..MainWindow.TableModel_editor import TableModel_editor as TableModel,Table
 
 from ..Review.workers.ReviewLast import ReviewLast
 from .workers.NewEntryWorker import NewEntryWorker
+from ..Preview.Preview import Preview
 
 class NewEntry(QWidget):
     def __init__(self,parent):
@@ -52,6 +53,15 @@ class NewEntry(QWidget):
         #self.model.load_data(currency(),re=True)
         self.builderWorker()
 
+
+    def preview_before_commit(self):
+        print("preview being called!")
+        def message():
+            print("user rejected changes")
+        preview=Preview(self,self.model.item)
+        preview.gui.accepted.connect(self.commitTable)
+        preview.gui.rejected.connect(message)
+
     def commitTable(self):
         self.workerNew=NewEntryWorker(self.auth,self.model.item)
         self.workerNew.signals.hasError.connect(lambda x:print(x))
@@ -61,4 +71,4 @@ class NewEntry(QWidget):
 
     def buttons(self):
         self.parent.newEntry.clear.clicked.connect(self.clearTable)
-        self.parent.newEntry.commit.clicked.connect(self.commitTable)
+        self.parent.newEntry.commit.clicked.connect(self.preview_before_commit)
