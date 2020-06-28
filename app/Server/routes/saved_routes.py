@@ -85,10 +85,12 @@ def add_saved():
     json=ccj(json)
     if not json:
         return messages.NO_JSON.value
+    '''
     if len(json.keys()) > 0:
         saved=db.session.query(Saved).filter_by(**json).first()
         if saved != None:
             return  status(saved,status=status_codes.OLD)
+    '''
     saved=Saved(**json)
     db.session.add(saved)
     db.session.commit()
