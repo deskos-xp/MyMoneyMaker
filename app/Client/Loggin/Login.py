@@ -42,7 +42,7 @@ class Login:
 
                 self.signals.hasUser.emit(user)
                 
-            self.cached=Remember(self.parent,Path("User.json"))
+            self.cached=Remember(self.parent,Path.home()/Path(".cache")/Path("User.json"))
             self.cached.signals.finished.connect(lambda :print("finished loading user from cache"))
             self.cached.signals.hasError.connect(lambda x:print(x))
             self.cached.signals.hasUser.connect(hasUser)
@@ -54,12 +54,12 @@ class Login:
         if self.parent.rememberMe.isChecked():
             u=deepcopy(us)
             u['rememberMe']=self.parent.rememberMe.isChecked()
-            with open(Path("User.json"),"w") as fd:
+            with open(Path.home()/Path(".cache")/Path("User.json"),"w") as fd:
                 json.dump(u,fd)
         else:
             u=deepcopy(user())
             u['rememberMe']=self.parent.rememberMe.isChecked()
-            with open(Path("User.json"),"w") as fd:
+            with open(Path.home()/Path(".cache")/Path("User.json"),"w") as fd:
                json.dump(u,fd)
  
     def builderWorker(self):

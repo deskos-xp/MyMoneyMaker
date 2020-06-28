@@ -1,1 +1,0 @@
-{"active": true, "email": "admin@localhost", "fname": "first_name", "id": 1, "lname": "last_name", "mname": "middle_name", "password": "avalon", "phone": "55555555555", "roles": [{"id": 1, "name": "admin"}], "uname": "admin", "host": "http://localhost:9090", "rememberMe": true}
