@@ -1,0 +1,1 @@
+add a summary dialog to confirm new entry commit
