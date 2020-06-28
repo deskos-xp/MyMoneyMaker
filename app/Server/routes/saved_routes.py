@@ -48,7 +48,8 @@ def get_saved():
     #print(json)
     #assert json != None
     if not json:
-        return messages.NO_JSON.value
+        if json != {}:
+            return messages.NO_JSON.value
     page=json.get('page')
     limit=json.get('limit')
     if page == None:

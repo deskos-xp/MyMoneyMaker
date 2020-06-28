@@ -5,6 +5,7 @@ from .Loggin.Login import Login
 from .MenuBar.MenuBar import MenuBar
 from .Review.Review import Review
 from .NewEntry.NewEntry import NewEntry
+from .Charting.Charting import Charting
 import os,sys,json
 
 class Main(QMainWindow):
@@ -25,6 +26,7 @@ class Main(QMainWindow):
 
         self.stacks['reviewlast']=Review(self.stacks['login'].user,self)
         self.stacks['newEntry']=NewEntry(self)
+        self.stacks['charting']=Charting(self)
         self.menubar=MenuBar(self)
 
         print(self.user,"user"*10)

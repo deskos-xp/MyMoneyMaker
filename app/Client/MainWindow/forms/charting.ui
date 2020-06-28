@@ -25,12 +25,12 @@
         <x>0</x>
         <y>0</y>
         <width>873</width>
-        <height>539</height>
+        <height>541</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QWidget" name="graph" native="true"/>
+        <widget class="PlotWidget" name="graph" native="true"/>
        </item>
       </layout>
      </widget>
@@ -45,6 +45,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
