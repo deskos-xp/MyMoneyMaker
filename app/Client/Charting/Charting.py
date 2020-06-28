@@ -19,7 +19,8 @@ class Charting(QWidget):
         self.y=currency_lst()
 
         parent.charting.refresh.clicked.connect(self.rechart)
-        self.rechart()
+        parent.tabWidget.currentChanged.connect(self.rechart)
+        parent.charting.refresh.click()
 
     def parseEntries(self,entries):
         e=entries.get("status")

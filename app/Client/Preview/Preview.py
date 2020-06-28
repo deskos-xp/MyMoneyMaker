@@ -16,7 +16,7 @@ class Preview(QDialog):
  
         self.model=TableModel(item=data,ReadOnly=TableModelEnum.READONLY)
         self.gui.view.setModel(self.model)
-        
+        prep_table(self.gui.view) 
         total=0
         for k in currency_mx().keys():
             total+=data.get(k)*currency_mx().get(k)
