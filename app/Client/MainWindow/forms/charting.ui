@@ -25,12 +25,126 @@
         <x>0</x>
         <y>0</y>
         <width>873</width>
-        <height>541</height>
+        <height>539</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="PlotWidget" name="graph" native="true"/>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="total">
+          <attribute name="title">
+           <string>Total</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pennies">
+          <attribute name="title">
+           <string>Pennies</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_pennies" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Nickels">
+          <attribute name="title">
+           <string>Nickels</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_nickels" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dimes">
+          <attribute name="title">
+           <string>Dimes</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dimes" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="quarters">
+          <attribute name="title">
+           <string>Quarters</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_quarters" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar">
+          <attribute name="title">
+           <string>Dollar</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar5">
+          <attribute name="title">
+           <string>Dollar 5</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar5" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar10">
+          <attribute name="title">
+           <string>Dollar 10</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_10">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar10" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar20">
+          <attribute name="title">
+           <string>Dollar 20</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar20" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar50">
+          <attribute name="title">
+           <string>Dollar 50</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar50" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="dollar100">
+          <attribute name="title">
+           <string>Dollar 100</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="PlotWidget" name="graph_dollar100" native="true"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </item>
       </layout>
      </widget>

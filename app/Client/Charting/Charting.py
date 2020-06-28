@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget
 import os,sys,json
 from pathlib import Path
 import pyqtgraph as pg
+from ..MainWindow.default_fields import *
 from .workers.getEntries import getEntries
 
 class Charting(QWidget):
@@ -14,8 +15,8 @@ class Charting(QWidget):
         uic.loadUi("Client/MainWindow/forms/charting.ui",parent.charting)
         #parent.charting.graph=pg.PlotWidget(v)
 
-        self.x=[] 
-        self.y=[]
+        self.x=currency_lst()
+        self.y=currency_lst()
 
         parent.charting.refresh.clicked.connect(self.rechart)
         self.rechart()
@@ -23,37 +24,42 @@ class Charting(QWidget):
     def parseEntries(self,entries):
         e=entries.get("status")
         d=entries.get(e)
-        self.x.clear()
-        self.y.clear()
+        self.x=currency_lst()
+        self.y=currency_lst()
         for num,i in enumerate(d):
-            total=0
+            total=currency_ut()
             for k in i.keys():
                 if i.get(k) == None:
                     pass
                 elif k == "pennies":
-                    total+=i[k]*0.01
+                    total['total']+=i[k]*0.01
                 elif k == "nickels":
-                    total+=i[k]*0.05
+                    total['total']+=i[k]*0.05
                 elif k == "dimes":
-                    total+=i[k]*0.10
+                    total['total']+=i[k]*0.10
                 elif k == "quarters":
-                    total+=i[k]*0.25
+                    total['total']+=i[k]*0.25
                 elif k == "dollar":
-                    total+=i[k]
+                    total['total']+=i[k]
                 elif k == "dollar5":
-                    total+=i[k]*5
+                    total['total']+=i[k]*5
                 elif k == "dollar10":
-                    total+=i[k]*10
+                    total['total']+=i[k]*10
                 elif k == "dollar20":
-                    total+=i[k]*20
+                    total['total']+=i[k]*20
                 elif k == "dollar50":
-                    total+=i[k]*50
+                    total['total']+=i[k]*50
                 elif k == "dollar100":
-                    total+=i[k]*100
-            self.x.append(num)
-            self.y.append(total)
-        print(self.x,self.y)
-        self.plot(self.x,self.y,update=True)
+                    total['total']+=i[k]*100
+                if k in currency_mx().keys():
+                    self.x[k].append(num)
+                    self.y[k].append(i[k]*currency_mx()[k])
+            self.x['total'].append(num)
+            self.y['total'].append(total['total'])
+        for i in currency_mx().keys():
+            if i != "total":
+                self.plot(self.x.get(i),self.y.get(i),update=True,name=i)
+        self.plot(self.x.get("total"),self.y.get("total"),update=True)
 
     def builderWorker(self):
         self.worker=getEntries(self.auth)
@@ -66,13 +72,19 @@ class Charting(QWidget):
     def rechart(self):
         print("called rechart")
         self.builderWorker()
-        self.plot(self.x,self.y,update=True)
+        #self.plot(self.x[''],self.y,update=True)
 
-    def plot(self,x,y,update=False):
-        if update == False:
-            self.parent.charting.graph.plot(x,y,pen=(1,3))
+    def plot(self,x,y,update=False,name=None):
+        if name == None:
+            if update == False:
+                self.parent.charting.graph.plot(x,y,pen=(1,3))
+            else:
+                self.parent.charting.graph.plot(x,y,clear=True,pen=(1,3))
         else:
-            self.parent.charting.graph.plot(x,y,clear=True,pen=(1,3))
-
+            try:
+                n="graph_{name}".format(**dict(name=name))
+                getattr(self.parent.charting,n).plot(x,y,pen=(1,3))
+            except Exception as e:
+                print(e)
 
 

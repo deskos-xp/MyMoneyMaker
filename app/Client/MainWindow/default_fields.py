@@ -12,6 +12,15 @@ def help_():
             comment=""
             )
 
+def currency_ut():
+    return dict(total=0,pennies=0,nickels=0,dimes=0,quarters=0,dollar=0,dollar5=0,dollar10=0,dollar20=0,dollar50=0,dollar100=0)
+def currency_lst():
+    return dict(total=[],pennies=[],nickels=[],dimes=[],quarters=[],dollar=[],dollar5=[],dollar10=[],dollar20=[],dollar50=[],dollar100=[])
+def currency_mx():
+    return dict(pennies=0.01,nickels=0.05,dimes=0.1,quarters=0.25,dollar=1,dollar5=5,dollar10=10,dollar20=20,dollar50=50,dollar100=100)
+
+
+
 def currency():
     return dict(
         pennies=0,
