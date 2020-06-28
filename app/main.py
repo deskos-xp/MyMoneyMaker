@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 from Client import main
 import subprocess
 from pathlib import Path

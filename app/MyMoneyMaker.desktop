@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=MyMoneyMaker
+Exec=/opt/MyMoneyMaker/app/main.py
+Comment=track your money
+Terminal=false
+Type=Application
+Categories=Utility;Application
+Path=/opt/MyMoneyMaker/app
+Icon=/opt/MyMoneyMaker/app/Client/MainWindow/program.png
+StartupNotify=true
