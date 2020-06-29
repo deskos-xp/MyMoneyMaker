@@ -10,6 +10,8 @@ from .Charting.Charting import Charting
 import os,sys,json
 from pathlib import Path
 
+from .About.workers.readAbout import readAbout
+
 class Main(QMainWindow):
     def __init__(self):
         super(Main,self).__init__()
@@ -30,7 +32,20 @@ class Main(QMainWindow):
         self.stacks['newEntry']=NewEntry(self)
         self.stacks['charting']=Charting(self)
         self.menubar=MenuBar(self)
-        self.setWindowIcon(QIcon(QPixmap(str(Path("Client/MainWindow/program.png")))))
+
+        self.about=readAbout(Path("Client/MainWindow/about.json"))
+        self.about.signals.finished.connect(lambda :print("finished reading about"))
+        self.about.signals.hasError.connect(lambda x:print(x))
+        QThreadPool.globalInstance().start(self.about)
+
+        def update_window(data):
+            windowIcon=QIcon(QPixmap(str(Path("Client/MainWindow")/Path(data.get("logo")))))
+            self.setWindowIcon(windowIcon)
+            self.setWindowTitle(data.get("name"))
+
+        self.about.signals.hasAbout.connect(update_window)
+
+        #self.setWindowIcon(QIcon(QPixmap(str(Path("Client/MainWindow/program.png")))))
         print(self.user,"user"*10)
         self.show()
 

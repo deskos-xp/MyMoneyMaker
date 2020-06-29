@@ -52,7 +52,7 @@ class Charting(QWidget):
                     total['total']+=i[k]*50
                 elif k == "dollar100":
                     total['total']+=i[k]*100
-                if k in currency_mx().keys():
+                if k in currency_mx().keys() and i.get(k) != None:
                     self.x[k].append(num)
                     self.y[k].append(i[k]*currency_mx()[k])
             self.x['total'].append(num)

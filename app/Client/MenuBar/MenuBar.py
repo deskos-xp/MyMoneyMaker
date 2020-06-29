@@ -1,8 +1,10 @@
+from ..About.About import About
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
         parent.actionLogout.triggered.connect(self.invalidus)
         parent.actionExit.triggered.connect(parent.close)
+        parent.action_About.triggered.connect(self.about_)
         parent.stackedWidget.currentChanged.connect(self.lock_action_logout)
         self.lock_action_logout(0)
 
@@ -20,3 +22,7 @@ class MenuBar:
         print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
         ind=self.parent.stackedWidget.indexOf(self.parent.loggedIn)
         self.parent.actionLogout.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
+
+    def about_(self):
+        a=About(self.parent)
+
