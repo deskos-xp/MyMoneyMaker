@@ -70,7 +70,7 @@ class TableModel_editor(QAbstractTableModel):
             else:
                 if self.fields[index.row()] == 'date' and index.column() == 2:
                     return baseflags
-                if self.fields[index.row()] == 'id':
+                if self.fields[index.row()] in ['id','user_id']:
                     return baseflags
                 return baseflags | Qt.ItemIsEditable
         else:

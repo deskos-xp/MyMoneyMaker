@@ -1,9 +1,6 @@
-from flask import make_response,request
+from flask import make_response,request,session
 from flask import current_app as app
 from ..models.Saved import db,auth,ma,Saved,SavedSchema
-#from ..models.brand import Brand
-#from ..models.vendor import Vendor
-#from ..models.manufacturer import Manufacturer
 import json as Json
 import os
 from sqlalchemy.orm.attributes import flag_modified
@@ -31,9 +28,10 @@ def v(username,password):
 @auth.login_required
 @roles_required(roles=['admin','user'])
 def get_saved_id(ID):
+    user_id=session.get('user_id').get('id')
     if ID == None:
         return status(Saved(),status=status_codes.NO_ID_PROVIDED,msg="no saved id provided!")
-    saved=db.session.query(Saved).filter_by(id=ID).first()
+    saved=db.session.query(Saved).filter_by(**dict(id=ID,user_id=user_id)).first()
     if Saved == None:
         return status(Saved(),status=status_codes.INVALID_ID,msg="invalid saved!")
     savedSchema=SavedSchema()
@@ -43,6 +41,7 @@ def get_saved_id(ID):
 @auth.login_required
 @roles_required(roles=['admin','user'])
 def get_saved():
+    user_id=session.get('user_id').get('id')
     json=request.get_json(force=True)
     json=ccj(json)
     #print(json)
@@ -61,8 +60,9 @@ def get_saved():
         json.__delitem__('limit')
     if json.get('page') != None:
         json.__delitem__('page')
+    json['user_id']=user_id
 
-    savedes=db.session.query(Saved).filter_by(**json).limit(limit).offset(page*limit).all()
+    savedes=db.session.query(Saved).filter(**json).limit(limit).offset(page*limit).all()
     savedSchema=SavedSchema()
     savedes=[savedSchema.dump(i) for i in savedes]
     return status(Saved(),status=status_codes.OBJECTS,objects=Json.dumps(savedes))
@@ -71,7 +71,12 @@ def get_saved():
 @auth.login_required
 @roles_required(roles=["admin","user"])
 def get_last():
-    last=db.session.query(Saved).all()
+    user_id=session['user_id']
+    user_id=user_id.get("id")
+    print(user_id)
+    last=db.session.query(Saved).filter(**dict(user_id=user_id)).all()
+
+    #last=db.session.query(Saved).filter_by(**dict(user_id=user_id)).all()
     if last and len(last) > 0:
         return status(Saved(),status=status_codes.OBJECT,object=SavedSchema().dump(last[-1]))
     else:
@@ -91,26 +96,27 @@ def add_saved():
         if saved != None:
             return  status(saved,status=status_codes.OLD)
     '''
+    user_id=session.get('user_id').get('id')
+    json['user_id']=user_id
     saved=Saved(**json)
     db.session.add(saved)
     db.session.commit()
     db.session.flush()
     return status(saved,status=status_codes.NEW)
 
+
 @app.route("/saved/update/<ID>",methods=["post"])
 @auth.login_required
 @roles_required(roles=['admin'])
 def update_saved(ID):
-    #assert ID != None
+    user_id=session.get("user_id").get("id")
     if not ID:
         return messages.NO_ID.value
-    saved_old=db.session.query(Saved).filter_by(id=ID).first()
-    #assert saved_old != None
+    saved_old=db.session.query(Saved).filter_by(**dict(id=ID,user_id=user_id)).first()
     if not saved_old:
         return messages.ENTITY_DOES_NOT_EXIST.value
     json=request.get_json(force=True)
     json=ccj(json)
-    #assert json != None
     if not json:
         return messages.NO_JSON.value
     for key in saved_old.defaultdict().keys():
@@ -129,3 +135,4 @@ def update_saved(ID):
     db.session.flush()
     db.session.commit()
     return status(saved_old,status=status_codes.UPDATED)
+

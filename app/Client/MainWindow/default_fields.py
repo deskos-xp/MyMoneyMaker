@@ -11,9 +11,19 @@ def help_():
             email="",
             comment=""
             )
-
 def currency_ut():
     return dict(total=0,pennies=0,nickels=0,dimes=0,quarters=0,dollar=0,dollar5=0,dollar10=0,dollar20=0,dollar50=0,dollar100=0)
+
+def currency_ut_plus():
+    c=currency_ut()
+    c['date']=""
+    c['page']=0
+    c['limit']=10
+    
+    c.__delitem__("total")
+    
+    return c
+
 def currency_lst():
     return dict(total=[],pennies=[],nickels=[],dimes=[],quarters=[],dollar=[],dollar5=[],dollar10=[],dollar20=[],dollar50=[],dollar100=[])
 def currency_mx():
