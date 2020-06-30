@@ -6,6 +6,7 @@ from pathlib import Path
 import pyqtgraph as pg
 from ..MainWindow.default_fields import *
 from .workers.getEntries import getEntries
+from PyQt5.QtGui import QIcon
 
 class Charting(QWidget):
     def __init__(self,parent):
@@ -19,6 +20,7 @@ class Charting(QWidget):
         self.y=currency_lst()
 
         parent.charting.refresh.clicked.connect(self.rechart)
+        parent.charting.refresh.setIcon(QIcon.fromTheme("refreshstructure"))
         parent.tabWidget.currentChanged.connect(self.rechart)
         parent.charting.refresh.click()
 

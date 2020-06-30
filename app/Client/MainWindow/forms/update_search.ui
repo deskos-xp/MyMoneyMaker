@@ -30,7 +30,7 @@
      </property>
      <widget class="QTableView" name="searchView">
       <property name="toolTip">
-       <string>fields to search with </string>
+       <string>fields to search with (must be exact)</string>
       </property>
      </widget>
      <widget class="QListView" name="resultsView">

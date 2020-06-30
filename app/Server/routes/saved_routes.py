@@ -62,7 +62,7 @@ def get_saved():
         json.__delitem__('page')
     json['user_id']=user_id
 
-    savedes=db.session.query(Saved).filter(**json).limit(limit).offset(page*limit).all()
+    savedes=db.session.query(Saved).filter_by(**json).limit(limit).offset(page*limit).all()
     savedSchema=SavedSchema()
     savedes=[savedSchema.dump(i) for i in savedes]
     return status(Saved(),status=status_codes.OBJECTS,objects=Json.dumps(savedes))
@@ -74,7 +74,7 @@ def get_last():
     user_id=session['user_id']
     user_id=user_id.get("id")
     print(user_id)
-    last=db.session.query(Saved).filter(**dict(user_id=user_id)).all()
+    last=db.session.query(Saved).filter_by(**dict(user_id=user_id)).all()
 
     #last=db.session.query(Saved).filter_by(**dict(user_id=user_id)).all()
     if last and len(last) > 0:
