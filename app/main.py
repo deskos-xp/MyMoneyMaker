@@ -4,6 +4,14 @@ import subprocess
 from pathlib import Path
 import json
 import os
+import argparse
+
+class parseable:
+    def __init__(self):
+        parser=argparse.ArgumentParser()
+        
+
+
 
 def read_config():
     cmd=""
