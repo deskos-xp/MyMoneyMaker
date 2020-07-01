@@ -10,3 +10,4 @@ make a installer for windows users
 add ability to start/stop server from client
 
 make a dynamic table mode that adjusts rows and columns base off of dict input
+slight issue when changing tabs too quickly causes segfault, probably due to repeat requests, need to ensure that any requests being run while tab is changing is killed before starting a new one
