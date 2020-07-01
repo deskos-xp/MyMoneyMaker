@@ -1,7 +1,7 @@
 from flask import request,make_response
 from flask import current_app as app
 from ..models.User import User,db,UserSchema,auth,Role
-
+from ..config.Config import Config
 from . import verify
 from .decor import roles_required
 import os,sys
@@ -100,7 +100,8 @@ def alter_user(ID):
     db.session.commit()
     return status(User(),status=status_codes.UPDATED)
 
-if os.environ['NEED_ADMIN'] == "True":
+if Config().NEED_ADMIN == True:
+    #if os.environ['NEED_ADMIN'] == "True":
     @app.route("/admin/new",methods=["get"])
     def new_admin():
         if os.environ['NEED_ADMIN'] == "True":

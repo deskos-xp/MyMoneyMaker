@@ -7,13 +7,17 @@ from sqlalchemy.inspection import inspect
 from . import models
 import json,logging,os
 from dotenv import load_dotenv
+#from .config.config import Config
+from .config.Config import Config
 load_dotenv()
 #from sql_alchemy_utils import auto_delete_orphans
 
-LOG=os.getenv(os.getenv("LOG"))
+#LOG=os.getenv(os.getenv("LOG"))
+LOG=Config().LOG
 if LOG:
     if os.path.exists(LOG) and os.path.isfile(LOG):
         os.remove(LOG)
+
 logging.basicConfig(level=logging.INFO,filename=LOG,filemode="a")
 db=SQLAlchemy()
 ma=Marshmallow()
@@ -100,7 +104,8 @@ def delete(ID,model):
 
 app=Flask(__name__,instance_relative_config=False)
 def create_app():
-    app.config.from_object('config.Config')
+    app.config.from_object(Config())
+    #'config.Config')
     db.init_app(app)
     ma.init_app(app)
 
