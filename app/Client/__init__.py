@@ -11,6 +11,7 @@ import os,sys,json
 from pathlib import Path
 
 from .About.workers.readAbout import readAbout
+from .Update.Update import Update
 
 class Main(QMainWindow):
     def __init__(self):
@@ -31,6 +32,8 @@ class Main(QMainWindow):
         self.stacks['reviewlast']=Review(self.stacks['login'].user,self)
         self.stacks['newEntry']=NewEntry(self)
         self.stacks['charting']=Charting(self)
+        self.stacks['update']=Update(self)
+
         self.menubar=MenuBar(self)
 
         self.about=readAbout(Path("Client/MainWindow/about.json"))

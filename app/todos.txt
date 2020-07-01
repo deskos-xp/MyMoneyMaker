@@ -1,1 +1,6 @@
-add a help dialog
+add user control dialog
+[done]add update tab to client
+add update dialog that recieves data from update tab so user can update the entry
+[done]add update routes for saved model to server
+
+make a dynamic table mode that adjusts rows and columns base off of dict input

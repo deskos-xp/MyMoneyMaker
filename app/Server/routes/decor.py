@@ -1,5 +1,5 @@
-from ..models.User import auth,db,User
- 
+from ..models.User import auth,db,User,UserSchema
+from flask import session 
 def roles_required(roles:list,**arguments):
     def decorator(function):
         def Wrapper(*args,**kargs):
@@ -19,6 +19,7 @@ def roles_required(roles:list,**arguments):
 
             if authorized == False:
                 return "user not authorized by role!",401
+            session['user_id']=UserSchema().dump(user)
             r=function(*args,**kargs)
             return r
         Wrapper.__name__ = function.__name__

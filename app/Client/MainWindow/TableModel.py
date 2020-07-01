@@ -62,7 +62,7 @@ class TableModel(QAbstractTableModel):
             if self.ReadOnly == TableModelEnum.READONLY:
                 return baseflags
             else:
-                if self.fields[index.row()] == 'id':
+                if self.fields[index.row()] == ['id','user_id']:
                     return baseflags
                 return baseflags | Qt.ItemIsEditable
         else:

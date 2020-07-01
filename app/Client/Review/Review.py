@@ -6,6 +6,7 @@ from .workers.ReviewLast import ReviewLast
 from ..MainWindow.TableModel import TableModel,TableModelEnum
 from ..MainWindow.default_fields import *
 from copy import deepcopy
+from PyQt5.QtGui import QIcon
 
 class Review(QWidget):
     def __init__(self,auth:dict,parent):
@@ -17,6 +18,7 @@ class Review(QWidget):
         
         uic.loadUi("Client/MainWindow/forms/review.ui",parent.review)
         self.parent.review.refresh.clicked.connect(self.builderReview)
+        self.parent.review.refresh.setIcon(QIcon.fromTheme("refreshstructure"))
         self.model=TableModel(item=currency(),ReadOnly=TableModelEnum.READONLY)
         self.parent.review.view.setModel(self.model)
         prep_table(self.parent.review.view)

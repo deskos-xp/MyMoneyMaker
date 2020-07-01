@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 from copy import deepcopy
 from ..MainWindow.default_fields import *
+from PyQt5.QtGui import QIcon
 
 class LoginSignals(QObject):
     hasUser:pyqtSignal=pyqtSignal(dict)
@@ -21,7 +22,7 @@ class Login:
         parent.password.textChanged.connect(self.storeValue)
         parent.host.textChanged.connect(self.storeValue)
         parent.loggin_btn.clicked.connect(self.login)
-
+        parent.loggin_btn.setIcon(QIcon.fromTheme('lock'))
         self.wid=getattr(parent,'loggedIn')
         self.index_loggedIn=parent.stackedWidget.indexOf(self.wid)
         self.auth['username']=self.parent.username.text()
