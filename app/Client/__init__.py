@@ -16,12 +16,14 @@ from .Update.Update import Update
 class Main(QMainWindow):
     def __init__(self,**kwargs):
         super(Main,self).__init__()
+        self.cmdline=kwargs.get("cmdline")
         self.server_pid=kwargs.get("server_pid")
         uic.loadUi("Client/MainWindow/forms/main.ui",self)
         self.statusBar().showMessage("server started on pid: {pid}".format(**dict(pid=self.server_pid)))
         self.stacks=dict()
         self.user=dict()
-        self.stacks['login']=Login(self)
+        self.stacks['login']=Login(self,self.cmdline)
+
         def store(var):
             for i in self.stacks.keys():
                 if i != "login":

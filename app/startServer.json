@@ -1,3 +1,15 @@
 {
-	"cmd":"uwsgi --http :9090 --master --plugin /usr/lib/uwsgi/python_plugin.so --process 2 --threads 2 --wsgi-file wsgi.py -b 32768"
+	"cmd":"uwsgi",
+	"protocol":"--http",
+	"port":":9090",
+	"plugin":"--plugin",
+	"plugin-file":"/usr/lib/uwsgi/python_plugin.so",
+	"process":"--process",
+	"process_num":2,
+	"threads":"--threads",
+	"threads_num":2,
+	"wsgi-file":"--wsgi-file",
+	"wsgi-fd":"wsgi.py",
+	"buffer":"-b",
+	"buffer_value":32768
 }

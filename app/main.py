@@ -5,27 +5,46 @@ from pathlib import Path
 import json
 import os
 import argparse
+import Parser       
 
-class parseable:
-    def __init__(self):
-        parser=argparse.ArgumentParser()
-        
+class dummy:
+    def __init__(self,**kwargs):
+        for k in kwargs.keys():
+            self.__dict__[k]=kwargs[k]
 
-
-
-def read_config():
-    cmd=""
+def read_config(**kwargs):
+    cmd={}
     config="startServer.json"
+    cmd_opt=kwargs.get("override")
+    total_cmd=[]
     with open(Path(config),"r") as fd:
-        cmd=json.load(fd).get("cmd")
-    return cmd.split(" ")
+        cmd=json.load(fd)
+    args={ i[0]:i[1] for i in cmd_opt._get_kwargs()}
+    overridden=[]
+    for k in cmd.keys():
+        override=False
+        if args.get("cmd") == "adjust-flask":
+            if k in ['protocol','port']:
+                if k == 'protocol':
+                    total_cmd.append("--{proto}".format(**dict(proto=str(args.get(k)))))
+                elif k == 'port':
+                    total_cmd.append(":{port}".format(**dict(port=str(args.get(k)))))
+                overridden.append(k)
+        if k not in overridden:    
+            total_cmd.append(str(cmd.get(k)))
+    return total_cmd
 
-def launch_server():
-    return subprocess.Popen(read_config(),shell=False,universal_newlines=True)
-#print(launch_server())
+def launch_server(**kwargs):
+    return subprocess.Popen(read_config(**kwargs),shell=False,universal_newlines=True)
 
-server=launch_server()
-code=main(server_pid=server.pid)
-#if code == None:
-os.kill(server.pid,9)
-
+p=Parser.parser()
+server=dummy(pid=0)
+if not p.options.no_flask:
+    server=launch_server(override=p.options)
+code=main(server_pid=server.pid,cmdline=p)
+if server.pid not in [None,0,[],{}]:
+    os.kill(server.pid,9)
+'''
+p=Parser.parser()
+print(read_config(override=p.options))
+'''

@@ -7,16 +7,18 @@ import json
 from copy import deepcopy
 from ..MainWindow.default_fields import *
 from PyQt5.QtGui import QIcon
+from urllib.parse import urlparse
 
 class LoginSignals(QObject):
     hasUser:pyqtSignal=pyqtSignal(dict)
 
 class Login:
-    def __init__(self,parent):
+    def __init__(self,parent,cmdline):
         self.user=dict()
         self.parent=parent
         self.signals=LoginSignals()
-
+        self.cmdline=cmdline
+            
         self.auth=dict(host="",username="",password="")
         parent.username.textChanged.connect(self.storeValue)
         parent.password.textChanged.connect(self.storeValue)
@@ -29,6 +31,22 @@ class Login:
         self.auth['password']=self.parent.password.text()
         self.auth['host']=self.parent.host.text()
         self.cachedUser()
+    
+    def cmdline_options(self):
+        if self.cmdline != None:
+            if self.cmdline.options.__contains__('port') and self.cmdline.options.__contains__("protocol"):
+                #print(self.cmdline.options,"should not be None(port and scheme)")       
+                #print(self.parent.host.text(),"should be adjusted!")
+                parsed_uri=urlparse(self.parent.host.text())
+                host=parsed_uri.netloc.split(":")
+                #print(host)
+                if host:
+                    h=host[0]
+                    replace="{scheme}://{addr}:{port}".format(**dict(scheme=self.cmdline.options.protocol,addr=h,port=self.cmdline.options.port))
+                    #print(replace,"replaced")
+                    self.parent.host.setText(replace)
+            
+            #print(parsed_uri,"uri"*10)
 
     def cachedUser(self):
         try:
@@ -39,6 +57,7 @@ class Login:
                 self.parent.username.setText(user.get("uname"))
                 self.parent.password.setText(user.get("password"))
                 self.parent.host.setText(user.get("host"))
+                self.cmdline_options()
                 self.parent.rememberMe.setChecked(user.get("rememberMe"))
 
                 self.signals.hasUser.emit(user)
@@ -88,6 +107,7 @@ class Login:
         self.builderWorker()
         QThreadPool.globalInstance().start(self.loginWorker)
         print(self.auth)
+        
 
     def storeValue(self,text):
         self.auth[self.parent.sender().objectName()]=text
