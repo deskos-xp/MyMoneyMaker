@@ -14,4 +14,7 @@ class Config:
             path=self.path
         d=self.getDict(path)
         for i in d.keys():
-            self.__dict__[i]=d[i]
+            if i == "LOG":
+                self.__dict__[i]=Path.home() / Path(d.get(i))
+            else:
+                self.__dict__[i]=d[i]
