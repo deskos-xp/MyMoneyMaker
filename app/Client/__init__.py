@@ -14,11 +14,11 @@ from .About.workers.readAbout import readAbout
 from .Update.Update import Update
 
 class Main(QMainWindow):
-    def __init__(self):
+    def __init__(self,**kwargs):
         super(Main,self).__init__()
-
+        self.server_pid=kwargs.get("server_pid")
         uic.loadUi("Client/MainWindow/forms/main.ui",self)
-       
+        self.statusBar().showMessage("server started on pid: {pid}".format(**dict(pid=self.server_pid)))
         self.stacks=dict()
         self.user=dict()
         self.stacks['login']=Login(self)
@@ -53,7 +53,7 @@ class Main(QMainWindow):
         self.show()
 
 
-def main():
+def main(**kwargs):
     app=QApplication(sys.argv)
-    win=Main()
+    win=Main(**kwargs)
     app.exec_()

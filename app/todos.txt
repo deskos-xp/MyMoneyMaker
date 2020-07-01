@@ -7,5 +7,6 @@ add button asthetics
 add a server settings dialog and menubar action
 make a installer for windows users
 
+add ability to start/stop server from client
 
 make a dynamic table mode that adjusts rows and columns base off of dict input

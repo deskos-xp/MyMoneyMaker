@@ -17,7 +17,7 @@ def launch_server():
 #print(launch_server())
 
 server=launch_server()
-code=main()
+code=main(server_pid=server.pid)
 #if code == None:
 os.kill(server.pid,9)
 
