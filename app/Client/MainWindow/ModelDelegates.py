@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt,pyqtSlot,QDate
-from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox
+from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton
 import time
 import phonenumbers
 import sys
@@ -27,6 +27,33 @@ class PhoneTextEditDelegate(QItemDelegate):
 
     def setModelData(self,editor,model,index):
         model.setData(index,self.formatted,Qt.EditRole)
+    
+    @pyqtSlot()
+    def currentIndexChanged(self):
+        self.commitData.emit(self.sender())
+ 
+class ButtonDelegate(QItemDelegate):
+    def __init__(self,parent,action):
+        QItemDelegate.__init__(self,parent)
+        self.action=action
+
+    def createEditor(self,parent,option,index):
+        date=QPushButton(parent)
+        def act(state):
+            index.model().setData(index,self.action(),Qt.EditRole)
+            
+        date.clicked.connect(act)
+
+        return date
+
+    def setEditorData(self,editor,index):
+        editor.blockSignals(True)
+        #editor.setText(index.model().data(index)) 
+        editor.setText(index.model().data(index))
+        editor.blockSignals(False)
+
+    def setModelData(self,editor,model,index):
+        model.setData(index,editor.text(),Qt.EditRole)
     
     @pyqtSlot()
     def currentIndexChanged(self):

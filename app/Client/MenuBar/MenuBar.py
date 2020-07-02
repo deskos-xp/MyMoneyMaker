@@ -1,12 +1,19 @@
 from ..About.About import About
+from ..ServerSettings.ServerSettings import ServerSettings
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
         parent.actionLogout.triggered.connect(self.invalidus)
         parent.actionExit.triggered.connect(parent.close)
         parent.action_About.triggered.connect(self.about_)
+        parent.action_Server_Settings.triggered.connect(self.serverSettings_)
         parent.stackedWidget.currentChanged.connect(self.lock_action_logout)
         self.lock_action_logout(0)
+
+
+    def serverSettings_(self):
+        dialog=ServerSettings("Server/config/env.json",self.parent)
+        #dialog.show()
 
     def invalidus(self):
         loggin=self.parent.loggin
