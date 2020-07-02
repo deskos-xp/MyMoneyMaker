@@ -29,6 +29,7 @@ class MenuBar:
         print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
         ind=self.parent.stackedWidget.indexOf(self.parent.loggedIn)
         self.parent.actionLogout.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
+        self.parent.action_Server_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
 
     def about_(self):
         a=About(self.parent)

@@ -90,7 +90,7 @@ class Login:
         self.loginWorker.signals.finished.connect(lambda:print("finished attempting"))
 
     def success(self,user):
-        print(user,'success '*10)
+        #print(user,'success '*10)
         if user and user[0]:
             user=user[0]
             user['password']=self.auth.get("password")
@@ -100,15 +100,15 @@ class Login:
             self.parent.stackedWidget.setCurrentIndex(self.index_loggedIn)
             self.cacheUser(user)
             self.parent.review.refresh.click()
-        print(self.user)
+        #print(self.user)
 
 
     def login(self):
         self.builderWorker()
         QThreadPool.globalInstance().start(self.loginWorker)
-        print(self.auth)
+        #print(self.auth)
         
 
     def storeValue(self,text):
         self.auth[self.parent.sender().objectName()]=text
-        print(text)
+        #print(text)

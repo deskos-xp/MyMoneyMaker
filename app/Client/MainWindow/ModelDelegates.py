@@ -1,5 +1,7 @@
 from PyQt5.QtCore import Qt,pyqtSlot,QDate
-from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton
+from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton,QStyledItemDelegate
+from PyQt5.QtCore import QRect
+from PyQt5.QtGui import QPalette
 import time
 import phonenumbers
 import sys
@@ -40,7 +42,9 @@ class ButtonDelegate(QItemDelegate):
     def createEditor(self,parent,option,index):
         date=QPushButton(parent)
         def act(state):
-            index.model().setData(index,self.action(),Qt.EditRole)
+            acted=self.action()
+            if acted:
+                index.model().setData(index,acted,Qt.EditRole)
             
         date.clicked.connect(act)
 
@@ -85,12 +89,45 @@ class SpinBoxDelegate(QItemDelegate):
     def currentIndexChanged(self):
         self.commitData.emit(self.sender())
  
-class TextEditDelegate(QItemDelegate):
-    def __init__(self,parent):
-        QItemDelegate.__init__(self,parent)
+class TextEditDelegate(QStyledItemDelegate):
+    def __init__(self,parent,password=False):
+        QStyledItemDelegate.__init__(self,parent)
+        self.password=password
+        
+        def paint(painter, option, index):
+            #print("painted! "+time.ctime())
+            QStyledItemDelegate.paint(self, painter, option, index)
+            
+            painter.save()
+            try:
+                if index.column() <1:
+                    alignment=Qt.AlignLeft
+                else:
+                    alignment=Qt.AlignCenter
+                r=QRect(option.rect)
+                painter.fillRect(option.rect,option.palette.color(QPalette.Active,QPalette.Light))
+                if index.column() > 0:
+                    painter.drawText(option.rect,alignment,'*'*len(index.model().data(index)))
+                else:
+                    painter.drawText(option.rect,alignment,index.model().data(index))
+
+                #self.do_paint(painter, option, index)
+            except Exception as e:
+                print(e)
+            painter.restore()
+
+
+        if password:
+            self.paint=paint
+
 
     def createEditor(self,parent,option,index):
-        date=QTextEdit(parent) 
+        if self.password == False:
+            date=QTextEdit(parent)
+        else:
+            date=QLineEdit(parent)
+            date.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+                
         return date
 
     def setEditorData(self,editor,index):
@@ -99,8 +136,11 @@ class TextEditDelegate(QItemDelegate):
         editor.blockSignals(False)
 
     def setModelData(self,editor,model,index):
-        model.setData(index,editor.toPlainText(),Qt.EditRole)
-    
+        if self.password == False:
+            model.setData(index,editor.toPlainText(),Qt.EditRole)
+        else:
+            model.setData(index,editor.text(),Qt.EditRole)
+
     @pyqtSlot()
     def currentIndexChanged(self):
         self.commitData.emit(self.sender())

@@ -43,6 +43,7 @@ if not p.options.no_flask:
     server=launch_server(override=p.options)
 code=main(server_pid=server.pid,cmdline=p)
 if server.pid not in [None,0,[],{}]:
+    print(server.pid)
     os.kill(server.pid,9)
 '''
 p=Parser.parser()

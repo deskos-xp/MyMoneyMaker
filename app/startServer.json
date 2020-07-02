@@ -4,12 +4,12 @@
 	"port":":9090",
 	"plugin":"--plugin",
 	"plugin-file":"/usr/lib/uwsgi/python_plugin.so",
-	"process":"--process",
-	"process_num":2,
 	"threads":"--threads",
 	"threads_num":2,
 	"wsgi-file":"--wsgi-file",
 	"wsgi-fd":"wsgi.py",
 	"buffer":"-b",
-	"buffer_value":32768
+	"buffer_value":32768,
+	"pidfile":"--pidfile",
+	"pidfileVal":"/tmp/mymoneymaker.pid"
 }

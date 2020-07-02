@@ -64,20 +64,31 @@ class Charting(QWidget):
                 self.plot(self.x.get(i),self.y.get(i),update=True,name=i)
         self.plot(self.x.get("total"),self.y.get("total"),update=True)
 
-    def builderWorker(self):
+    def buildWorker(self):
         self.worker=getEntries(self.auth)
         self.worker.signals.finished.connect(lambda:print("finished getting values"))
         self.worker.signals.hasEntries.connect(self.parseEntries)
         self.worker.signals.hasError.connect(lambda x:print(x))
         self.worker.signals.hasResponse.connect(lambda x:print(x))
+
+    def builderWorker(self):
         QThreadPool.globalInstance().start(self.worker)
 
     def rechart(self):
+        #if not self.__dict__.get("worker"):
+        self.buildWorker()
+
+        if self.worker.signals.isFinished == False:
+            print("worker was killed")
+            self.worker.signals.kill()
         print("called rechart")
+
         self.builderWorker()
         #self.plot(self.x[''],self.y,update=True)
 
     def plot(self,x,y,update=False,name=None):
+        if self.worker.signals.isFinished == False:
+            return
         if name == None:
             if update == False:
                 self.parent.charting.graph.plot(x,y,pen=(1,3))

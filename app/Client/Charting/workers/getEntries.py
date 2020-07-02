@@ -8,11 +8,13 @@ class getEntriesSignals(QObject):
     hasEntries:pyqtSignal=pyqtSignal(dict)
     hasResponse:pyqtSignal=pyqtSignal(requests.Response)
     hasError:pyqtSignal=pyqtSignal(Exception)
+    isFinished:bool=False
 
     @pyqtSlot()
     def kill(self):
         self.killMe=True
         self.session.close()
+        self.isFinished=True
 
 class getEntries(QRunnable):
     def __init__(self,auth):
@@ -32,6 +34,7 @@ class getEntries(QRunnable):
             self.signals.hasResponse.emit(response)
             if response.json():
                 self.signals.hasEntries.emit(response.json())
+            self.signals.isFinished=True
         except Exception as e:
             self.signals.hasError.emit(e)
         self.signals.finished.emit()
