@@ -1,5 +1,7 @@
 from ..About.About import About
 from ..ServerSettings.ServerSettings import ServerSettings
+import getpass
+
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
@@ -29,8 +31,8 @@ class MenuBar:
         print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
         ind=self.parent.stackedWidget.indexOf(self.parent.loggedIn)
         self.parent.actionLogout.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
-        self.parent.action_Server_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
-
+        self.parent.action_Server_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind and getpass.getuser() == 'root')
+        self.parent.action_Client_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind and getpass.getuser() == 'root')
     def about_(self):
         a=About(self.parent)
 

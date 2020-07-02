@@ -12,3 +12,9 @@ add ability to start/stop server from client <---
 make a dynamic table mode that adjusts rows and columns base off of dict input
 
 slight issue when changing tabs too quickly causes segfault, probably due to repeat requests, need to ensure that any requests being run while tab is changing is killed before starting a new one -- well i was definitely wrong, the segfault was caused by pyqtplot attempting to plot too many times before the request was finished
+
+
+in both server and client do
+	if uid == 0 use config in /opt/MyMoneyMaker
+	else use config in $HOME/.cache/{server,client}_config.json 
+luckily only server config needs to be worked on

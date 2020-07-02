@@ -225,7 +225,7 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="action_Server_Settings"/>
-    <addaction name="actionClient_Settings"/>
+    <addaction name="action_Client_Settings"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -252,7 +252,7 @@
     <string>&amp;Server Settings</string>
    </property>
   </action>
-  <action name="actionClient_Settings">
+  <action name="action_Client_Settings">
    <property name="text">
     <string>&amp;Client Settings</string>
    </property>
