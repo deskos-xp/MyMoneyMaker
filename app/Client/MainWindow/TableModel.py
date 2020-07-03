@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QAbstractTableModel,Qt,QModelIndex 
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor,QFont
 import enum
 
 from ..MainWindow.emailLS import emailLS
@@ -86,7 +86,7 @@ class TableModel(QAbstractTableModel):
             if self.fields[row] in emails() and col > 0:
                 e=emailLS(self.values[row]).email_is_what
                 if not e:
-                    return QColor(219,92,65)
+                    return QColor(Qt.red)
             return QColor(Qt.white)
         elif role == Qt.ForegroundRole:
             if self.fields[row] in emails() and col > 0:
@@ -94,9 +94,15 @@ class TableModel(QAbstractTableModel):
                 if not e:
                     return QColor(Qt.white)
             return QColor(Qt.black)
-
         elif role == Qt.TextAlignmentRole:
             return self.align[col]
+        elif role == Qt.FontRole:
+            if self.fields[row] in emails() and col > 0:              
+                e=emailLS(self.values[row]).email_is_what
+                if not e:
+                    font=QFont()
+                    font.setWeight(QFont.Bold)
+                    return font
         return None
 
     def setData(self,index,value,role):
