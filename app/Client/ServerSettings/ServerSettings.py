@@ -10,6 +10,7 @@ from ..MainWindow.ModelDelegates import *
 from .workers.readServerConfig import readServerConfig
 from .workers.saveServerConfig import saveServerConfig
 import time
+from Server.config.Config import server_config
 
 class ServerSettings(QDialog):
     def __init__(self,config_path:Path,parent):
@@ -19,7 +20,7 @@ class ServerSettings(QDialog):
         self.dialog=QDialog(parent)
         uic.loadUi("Client/MainWindow/forms/server_settings.ui",self.dialog)
 
-        self.conf_reader=readServerConfig("Server/config/env.json")
+        self.conf_reader=readServerConfig(server_config())
         self.conf_reader.signals.finished.connect(lambda : print("finished reading server config"))
         self.conf_reader.signals.hasError.connect(lambda x:print(x,"error"))
 
@@ -37,7 +38,7 @@ class ServerSettings(QDialog):
         prep_table(self.dialog.editor)
 
         def userAcceptsChanges():      
-            saver=saveServerConfig(self.dialog,Path("Server/config/env.json"),self.model.item)
+            saver=saveServerConfig(self.dialog,server_config(),self.model.item)
             saver.signals.finished.connect(lambda:print("finished saving server... you need to restart the server"))
             #need a serverNeedsRestart signal
             saver.signals.hasError.connect(lambda x:print(x,"error"))

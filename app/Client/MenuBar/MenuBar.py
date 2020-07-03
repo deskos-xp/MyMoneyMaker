@@ -1,7 +1,7 @@
 from ..About.About import About
 from ..ServerSettings.ServerSettings import ServerSettings
 import getpass
-
+from ..User.UserDialog import UserDialog
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
@@ -12,6 +12,7 @@ class MenuBar:
         parent.stackedWidget.currentChanged.connect(self.lock_action_logout)
         self.lock_action_logout(0)
 
+        parent.actionUser.triggered.connect(self.user_)
 
     def serverSettings_(self):
         dialog=ServerSettings("Server/config/env.json",self.parent)
@@ -30,9 +31,14 @@ class MenuBar:
     def lock_action_logout(self,index):
         print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
         ind=self.parent.stackedWidget.indexOf(self.parent.loggedIn)
-        self.parent.actionLogout.setEnabled(self.parent.stackedWidget.currentIndex() == ind)
-        self.parent.action_Server_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind and getpass.getuser() == 'root')
-        self.parent.action_Client_Settings.setEnabled(self.parent.stackedWidget.currentIndex() == ind and getpass.getuser() == 'root')
+        state=self.parent.stackedWidget.currentIndex() == ind
+
+        self.parent.actionLogout.setEnabled(state)
+        self.parent.action_Server_Settings.setEnabled(state)
+        self.parent.actionUser.setEnabled(state)
+
     def about_(self):
         a=About(self.parent)
 
+    def user_(self):
+        u=UserDialog(self.parent)

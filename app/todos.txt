@@ -1,19 +1,20 @@
-add user control dialog
+add user control dialog <--- 1
 [done]add update tab to client
 [done]add update dialog that recieves data from update tab so user can update the entry
 [done]add update routes for saved model to server
 
 add button asthetics
 [done] add a server settings dialog and menubar action
+add client settings dialog and menubar action
 make a installer for windows users
 
-add ability to start/stop server from client <---
+add ability to start/stop server from client <--- 2
 
 make a dynamic table mode that adjusts rows and columns base off of dict input
 
-slight issue when changing tabs too quickly causes segfault, probably due to repeat requests, need to ensure that any requests being run while tab is changing is killed before starting a new one -- well i was definitely wrong, the segfault was caused by pyqtplot attempting to plot too many times before the request was finished
+[done]slight issue when changing tabs too quickly causes segfault, probably due to repeat requests, need to ensure that any requests being run while tab is changing is killed before starting a new one -- well i was definitely wrong, the segfault was caused by pyqtplot attempting to plot too many times before the request was finished
 
-
+[server segment done for below]
 in both server and client do
 	if uid == 0 use config in /opt/MyMoneyMaker
 	else use config in $HOME/.cache/{server,client}_config.json 

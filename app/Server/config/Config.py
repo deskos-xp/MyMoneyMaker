@@ -1,6 +1,17 @@
 import json,os
 from pathlib import Path
+def cp(root_conf:Path,user_conf:Path):
+        with open(root_conf,"r") as fd_in,open(user_conf,"w") as fd_out:
+            json.dump(json.load(fd_in),fd_out)
 
+
+def server_config():
+    path=Path("Server/config/env.json")
+    if os.getuid() != 0:
+        if not Path(Path().home() / Path(".cache/mymoneymaker_env.json")).exists():
+            cp(path,Path(Path().home() / Path(".cache/mymoneymaker_env.json")))
+        path=Path(Path().home() / Path(".cache/mymoneymaker_env.json"))
+    return path
 
 class Config:
     def getDict(self,path:Path):
@@ -8,8 +19,8 @@ class Config:
         with open(path,"r") as fd:
             d=json.load(fd)
         return d
-    path=Path("Server/config/env.json")
     def __init__(self,path:Path=None):
+        path=server_config()           
         if not path:
             path=self.path
         d=self.getDict(path)

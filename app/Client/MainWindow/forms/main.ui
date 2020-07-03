@@ -204,7 +204,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>32</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -225,7 +225,7 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="action_Server_Settings"/>
-    <addaction name="action_Client_Settings"/>
+    <addaction name="actionUser"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -255,6 +255,11 @@
   <action name="action_Client_Settings">
    <property name="text">
     <string>&amp;Client Settings</string>
+   </property>
+  </action>
+  <action name="actionUser">
+   <property name="text">
+    <string>&amp;User</string>
    </property>
   </action>
  </widget>
