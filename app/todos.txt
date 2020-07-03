@@ -14,7 +14,7 @@ make a dynamic table mode that adjusts rows and columns base off of dict input
 
 [done]slight issue when changing tabs too quickly causes segfault, probably due to repeat requests, need to ensure that any requests being run while tab is changing is killed before starting a new one -- well i was definitely wrong, the segfault was caused by pyqtplot attempting to plot too many times before the request was finished
 
-[server segment done for below]
+[server segment [done] for below]
 in both server and client do
 	if uid == 0 use config in /opt/MyMoneyMaker
 	else use config in $HOME/.cache/{server,client}_config.json 

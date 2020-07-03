@@ -11,7 +11,7 @@ from .workers.readServerConfig import readServerConfig
 from .workers.saveServerConfig import saveServerConfig
 import time
 from Server.config.Config import server_config
-
+from ..MainWindow.default_fields import emails
 class ServerSettings(QDialog):
     def __init__(self,config_path:Path,parent):
         super(ServerSettings,self).__init__()

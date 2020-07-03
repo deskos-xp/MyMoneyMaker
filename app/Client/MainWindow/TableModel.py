@@ -1,6 +1,10 @@
 from PyQt5.QtCore import QAbstractTableModel,Qt,QModelIndex 
 from PyQt5.QtGui import QColor
 import enum
+
+from ..MainWindow.emailLS import emailLS
+from .default_fields import *
+
 class TableModelEnum(enum.Enum):
     READONLY=False
     EDITABLE=True
@@ -11,7 +15,7 @@ class TableModel(QAbstractTableModel):
         self.item = item or {}
         self.row_count=0
         self.column_count=2
-        
+         
         self.ReadOnly=ReadOnly
 
         self.align=[]
@@ -19,6 +23,8 @@ class TableModel(QAbstractTableModel):
         self.fields=[]
         self.values=[]
         self.load_data(item)
+        for k in kwargs.keys():
+            self.__dict__[k]=kwargs.get(k)
 
     def init_align(self):
         for i in range(2):
@@ -77,7 +83,18 @@ class TableModel(QAbstractTableModel):
             else:
                 return self.values[row]
         elif role == Qt.BackgroundRole:
+            if self.fields[row] in emails() and col > 0:
+                e=emailLS(self.values[row]).email_is_what
+                if not e:
+                    return QColor(219,92,65)
             return QColor(Qt.white)
+        elif role == Qt.ForegroundRole:
+            if self.fields[row] in emails() and col > 0:
+                e=emailLS(self.values[row]).email_is_what
+                if not e:
+                    return QColor(Qt.white)
+            return QColor(Qt.black)
+
         elif role == Qt.TextAlignmentRole:
             return self.align[col]
         return None

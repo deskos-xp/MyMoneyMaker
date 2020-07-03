@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt,pyqtSlot,QDate
-from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton,QStyledItemDelegate
+from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton,QStyledItemDelegate,QStyleOptionViewItem
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPalette
 import time
@@ -93,7 +93,6 @@ class TextEditDelegate(QStyledItemDelegate):
     def __init__(self,parent,password=False):
         QStyledItemDelegate.__init__(self,parent)
         self.password=password
-        
         def paint(painter, option, index):
             #print("painted! "+time.ctime())
             QStyledItemDelegate.paint(self, painter, option, index)
@@ -119,7 +118,6 @@ class TextEditDelegate(QStyledItemDelegate):
 
         if password:
             self.paint=paint
-
 
     def createEditor(self,parent,option,index):
         if self.password == False:
