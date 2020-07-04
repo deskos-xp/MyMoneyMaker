@@ -15,10 +15,17 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTableView" name="editor"/>
+    <widget class="QTableView" name="editor">
+     <property name="toolTip">
+      <string>Settings to be changed, if any need to be changed</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="confirm">
+     <property name="toolTip">
+      <string>accept the changes</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

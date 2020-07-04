@@ -34,6 +34,9 @@
        <height>200</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>MyMoneyMaker</string>
+     </property>
      <property name="text">
       <string>TextLabel</string>
      </property>
@@ -43,10 +46,17 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QTableView" name="view"/>
+    <widget class="QTableView" name="view">
+     <property name="toolTip">
+      <string>about the program</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QDialogButtonBox" name="confirm">
+     <property name="toolTip">
+      <string>close the dialog</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

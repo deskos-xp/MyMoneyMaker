@@ -66,6 +66,9 @@
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="5" column="1">
            <widget class="QLineEdit" name="host">
+            <property name="toolTip">
+             <string>host address where the api resides</string>
+            </property>
             <property name="text">
              <string>http://localhost:9090</string>
             </property>
@@ -74,6 +77,9 @@
             </property>
             <property name="placeholderText">
              <string>http://localhost:5000</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -92,8 +98,11 @@
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="password">
+            <property name="toolTip">
+             <string>account password</string>
+            </property>
             <property name="text">
-             <string>avalo</string>
+             <string/>
             </property>
             <property name="echoMode">
              <enum>QLineEdit::PasswordEchoOnEdit</enum>
@@ -103,6 +112,9 @@
             </property>
             <property name="placeholderText">
              <string>Password</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -123,6 +135,9 @@
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="1" column="0">
               <widget class="QCheckBox" name="rememberMe">
+               <property name="toolTip">
+                <string>remember me so you don't have to</string>
+               </property>
                <property name="text">
                 <string>&amp;Remember Me</string>
                </property>
@@ -130,6 +145,9 @@
              </item>
              <item row="2" column="0">
               <widget class="QPushButton" name="loggin_btn">
+               <property name="toolTip">
+                <string>Log in to the server</string>
+               </property>
                <property name="text">
                 <string>&amp;Log In</string>
                </property>
@@ -140,14 +158,20 @@
           </item>
           <item row="3" column="1">
            <widget class="QLineEdit" name="username">
+            <property name="toolTip">
+             <string>account user</string>
+            </property>
             <property name="text">
-             <string>admin</string>
+             <string/>
             </property>
             <property name="dragEnabled">
              <bool>true</bool>
             </property>
             <property name="placeholderText">
              <string>Username</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

@@ -17,7 +17,11 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QTableView" name="editor"/>
+      <widget class="QTableView" name="editor">
+       <property name="toolTip">
+        <string>new entry fields</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QSplitter" name="splitter">
@@ -25,11 +29,17 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QPushButton" name="clear">
+        <property name="toolTip">
+         <string>reset the entry fields</string>
+        </property>
         <property name="text">
          <string>Clear</string>
         </property>
        </widget>
        <widget class="QPushButton" name="commit">
+        <property name="toolTip">
+         <string>commit the data to disk/server</string>
+        </property>
         <property name="text">
          <string>Commit</string>
         </property>

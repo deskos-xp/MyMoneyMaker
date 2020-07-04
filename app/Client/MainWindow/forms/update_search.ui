@@ -64,6 +64,9 @@
         <height>50</height>
        </size>
       </property>
+      <property name="toolTip">
+       <string>using the data in the search fields, search for results</string>
+      </property>
       <property name="text">
        <string>Search</string>
       </property>
@@ -74,6 +77,9 @@
         <width>16777215</width>
         <height>50</height>
        </size>
+      </property>
+      <property name="toolTip">
+       <string>clear the search fields and the search results</string>
       </property>
       <property name="text">
        <string>Clear</string>

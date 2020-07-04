@@ -2,17 +2,28 @@ from ..About.About import About
 from ..ServerSettings.ServerSettings import ServerSettings
 import getpass
 from ..User.UserDialog import UserDialog
+from PyQt5.QtGui import QIcon
+
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
         parent.actionLogout.triggered.connect(self.invalidus)
+        parent.actionLogout.setIcon(QIcon.fromTheme("lock"))
+
         parent.actionExit.triggered.connect(parent.close)
+        parent.actionExit.setIcon(QIcon.fromTheme("application-exit"))
+
         parent.action_About.triggered.connect(self.about_)
+        parent.action_About.setIcon(QIcon.fromTheme("help-about"))
+
         parent.action_Server_Settings.triggered.connect(self.serverSettings_)
+        parent.action_Server_Settings.setIcon(QIcon.fromTheme("offline-settings"))
+
         parent.stackedWidget.currentChanged.connect(self.lock_action_logout)
         self.lock_action_logout(0)
 
         parent.actionUser.triggered.connect(self.user_)
+        parent.actionUser.setIcon(QIcon.fromTheme("system-users"))
 
     def serverSettings_(self):
         dialog=ServerSettings("Server/config/env.json",self.parent)

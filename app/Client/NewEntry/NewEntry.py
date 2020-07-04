@@ -9,6 +9,7 @@ from ..MainWindow.TableModel_editor import TableModel_editor as TableModel,Table
 from ..Review.workers.ReviewLast import ReviewLast
 from .workers.NewEntryWorker import NewEntryWorker
 from ..Preview.Preview import Preview
+from PyQt5.QtGui import QIcon
 
 class NewEntry(QWidget):
     def __init__(self,parent):
@@ -71,4 +72,7 @@ class NewEntry(QWidget):
 
     def buttons(self):
         self.parent.newEntry.clear.clicked.connect(self.clearTable)
+        self.parent.newEntry.clear.setIcon(QIcon.fromTheme("delete_table"))
+
         self.parent.newEntry.commit.clicked.connect(self.preview_before_commit)
+        self.parent.newEntry.commit.setIcon(QIcon.fromTheme("document-save"))

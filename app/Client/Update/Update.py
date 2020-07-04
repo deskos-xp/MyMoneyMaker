@@ -24,9 +24,12 @@ class Update(QWidget):
 
         self.resultsModel=ListModel()
         parent.update.resultsView.setModel(self.resultsModel)
+        
         parent.update.search.clicked.connect(self.search)
-        #parent.update.search.setIcon(QIcon("search.svg"))
+        parent.update.search.setIcon(QIcon.fromTheme("search.svg"))
+        
         parent.update.clear.clicked.connect(self.clear)
+        parent.update.clear.setIcon(QIcon.fromTheme("delete_table.svg"))
         parent.update.resultsView.activated.connect(self.showResult)
         self.prepDelegates(parent)
 
