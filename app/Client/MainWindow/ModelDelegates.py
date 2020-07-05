@@ -218,3 +218,24 @@ class CheckBoxDelegate(QItemDelegate):
     @pyqtSlot()
     def currentIndexChanged(self):
         self.commitData.emit(self.sender()) 
+    
+class LineEditDelegate(QItemDelegate):
+    def __init__(self,parent):
+        QItemDelegate.__init__(self,parent)
+
+    def createEditor(self,parent,option,index):
+        box=QLineEdit(parent)
+        box.setText(index.model().data(index))
+        return box
+
+    def setEditorData(self,editor,index):
+        editor.blockSignals(True)
+        editor.setText(index.model().data(index))
+        editor.blockSignals(False)
+    def setModelData(self,editor,model,index):
+        model.setData(index,editor.text(),Qt.EditRole)
+
+    @pyqtSlot()
+    def currentIndexChanged(self):
+       self.commitData.emit(self.sender())
+
