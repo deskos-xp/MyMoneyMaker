@@ -49,7 +49,7 @@ class MenuBar:
         self.parent.actionUser.setEnabled(state)
 
     def about_(self):
-        a=About(self.parent)
+        self.a=About(self.parent)
 
     def user_(self):
-        u=UserDialog(self.parent)
+        self.u=UserDialog(self.parent)
