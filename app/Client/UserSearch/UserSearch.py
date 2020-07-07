@@ -45,6 +45,8 @@ class UserSearch(QWidget):
         widget.results.activated.connect(self.activatedSelection)
 
     def activatedSelection(self,select):
+        #user clicks on selection
+            #a dialog appears prompting to update/delete/view user data
         print(select.model().data(select,Qt.DisplayRole))
         print(self.model_list.items[select.row()])
 
