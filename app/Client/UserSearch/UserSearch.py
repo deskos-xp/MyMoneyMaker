@@ -9,6 +9,7 @@ import os,sys,json,requests
 from pathlib import Path
 from copy import deepcopy
 from .workers.SearchUser import SearchUser
+from PyQt5.QtGui import QIcon
 
 class UserSearch(QWidget):
     userSelected:pyqtSignal=pyqtSignal(dict)
@@ -43,8 +44,10 @@ class UserSearch(QWidget):
                 widget.editor.setItemDelegateForRow(num,LineEditDelegate(widget))
 
         widget.search.clicked.connect(self.searchF) 
-        widget.clear.clicked.connect(self.clear)
+        widget.search.setIcon(QIcon.fromTheme("search"))
 
+        widget.clear.clicked.connect(self.clear)
+        widget.clear.setIcon(QIcon.fromTheme("delete_table"))
         self.model_list=ListModel(custom="{id} - {uname}")
         widget.results.setModel(self.model_list)
         widget.results.activated.connect(self.activatedSelection)

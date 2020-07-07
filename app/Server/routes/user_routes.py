@@ -29,6 +29,8 @@ def getUserId(ID):
     if not ID:
         return "no id provided",402
     USER=db.session.query(User).filter_by(id=ID).first()
+    if not USER:
+        return "no user",402
     USER.password="x"*8
     userSchema=UserSchema()
 
