@@ -32,7 +32,7 @@ def getUserId(ID):
     USER.password="x"*8
     userSchema=UserSchema()
 
-    return userSchema.dump(USER)
+    return status(User(),status="object",object=userSchema.dump(USER))
 
 @app.route("/user/get",methods=["post"])
 @auth.login_required

@@ -11,15 +11,20 @@ from copy import deepcopy
 from .workers.SearchUser import SearchUser
 
 class UserSearch(QWidget):
+    userSelected:pyqtSignal=pyqtSignal(dict)
+
     def __init__(self,auth,parent,widget,name):
         super(UserSearch,self).__init__()
         self.auth=auth
         self.parent=parent
         self.name=name
         self.widget=widget
+
         print(name)
         
         self.u= {i:user()[i] for i in user().keys() if i != ""}       
+        self.u['page']=0
+        self.u['limit']=15
 
         self.model_table=TableModel(item=deepcopy(self.u))
         widget.editor.setModel(self.model_table)
@@ -32,7 +37,7 @@ class UserSearch(QWidget):
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget))
             elif key.lower() == "password":
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget,password=True))
-            elif key.lower() == "id":
+            elif key.lower() in ["id","page","limit"]:
                 widget.editor.setItemDelegateForRow(num,SpinBoxDelegate(widget))
             else:
                 widget.editor.setItemDelegateForRow(num,LineEditDelegate(widget))
@@ -47,8 +52,9 @@ class UserSearch(QWidget):
     def activatedSelection(self,select):
         #user clicks on selection
             #a dialog appears prompting to update/delete/view user data
-        print(select.model().data(select,Qt.DisplayRole))
-        print(self.model_list.items[select.row()])
+        #print(select.model().data(select,Qt.DisplayRole))
+        selected=self.model_list.items[select.row()]
+        self.userSelected.emit(selected)
 
     @pyqtSlot(bool)
     def searchF(self,state):
@@ -63,9 +69,10 @@ class UserSearch(QWidget):
         f=dict()
         
         for k in self.model_table.item.keys():
-            if self.model_table.item.get(k) != user().get(k):
+            if self.model_table.item.get(k) != user().get(k) or k in ['page','limit']:
                 f[k]=self.model_table.item.get(k)
         searchUsers=SearchUser(self.auth,f)
+        print(f,"searchF "*10)
         searchUsers.signals.finished.connect(lambda : print("finished searchUser"))
         searchUsers.signals.hasError.connect(lambda x:print(x,"error"))
         searchUsers.signals.hasResponse.connect(lambda x:print(x,"response"))

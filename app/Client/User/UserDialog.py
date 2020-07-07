@@ -7,14 +7,15 @@ from ..UserDelete.UserDelete import UserDelete
 from ..UserNew.UserNew import UserNew
 from ..UserSearch.UserSearch import UserSearch
 from ..UserUpdate.UserUpdate import UserUpdate
-inst=[UserUpdate,UserNew,UserSearch,UserDelete]
+from ..UserReview.UserReview import UserReview
+
 import enum
 class inst(enum.Enum):
     update_user_widget=UserUpdate
     new_user_widget=UserNew
     search_user_widget=UserSearch
     delete_user_widget=UserDelete
-
+    review_user_widget=UserReview
 
 class UserDialog(QDialog):
     def __init__(self,parent):
@@ -36,19 +37,30 @@ class UserDialog(QDialog):
         #print(self.auth)
         self.dialog.show()
 
+    def hasUser(self,user):
+        print(user)
+        try:
+            for i in self.views.keys():
+                if 'search' not in i:
+                    self.views[i].model.load_data(user,re=True)
+        except Exception as e:
+            print(e,"error"*10)
+ 
     def prep_ui(self,name):
         self.widgets[name]=getattr(self.dialog,name)
         try:
             uic.loadUi("Client/MainWindow/forms/{ii}.ui".format(**dict(ii=name)),self.widgets[name])
             #self.views[w[num]]=inst[num](self.auth,self,x,w[num])
             self.views[name]=inst.__dict__.get(name).value(self.auth,self,self.widgets[name],name)
+            if 'search' in name:
+                self.views[name].userSelected.connect(self.hasUser)
         except Exception as e:
             print(e,"error "*10)
 
     def before_loadUis(self):
-        w=['update','new','search','delete']
+        w=['update','new','search','delete','review']
         for num,i in enumerate(w):
-            if i != 'search':
+            if i not in ['search','review']:
                 continue
             self.names.append("{}_user_widget".format(i))
 

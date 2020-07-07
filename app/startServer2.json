@@ -1,3 +1,0 @@
-{
-	"cmd":"uwsgi --http :9090 --master --plugin /usr/lib/uwsgi/python_plugin.so --process 2 --threads 2 --wsgi-file wsgi.py -b 32768"
-}
