@@ -23,10 +23,10 @@ class UserSearch(QWidget):
 
         print(name)
         
-        self.u= {i:user()[i] for i in user().keys() if i != ""}       
+        self.u= {i:user()[i] for i in user().keys() if i not in  ["","roles"]}       
         self.u['page']=0
         self.u['limit']=15
-
+        
         self.model_table=TableModel(item=deepcopy(self.u),ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['password'])
         widget.editor.setModel(self.model_table)
         prep_table(widget.editor)
@@ -42,9 +42,8 @@ class UserSearch(QWidget):
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget,password=True))
             elif key.lower() in ["id","page","limit"]:
                 widget.editor.setItemDelegateForRow(num,SpinBoxDelegate(widget))
-            elif key == "roles":
-                pass
-                #need a model delegate for listed objects
+            #elif key == "roles":
+            #    widget.editor.setItemDelegateForRow(num,ComboBoxDelegate(parent,values=['admin','user']))
             else:
                 widget.editor.setItemDelegateForRow(num,LineEditDelegate(widget))
 

@@ -39,12 +39,14 @@ class UserDialog(QDialog):
 
     def hasUser(self,user):
         print(self.names)
-        
+        if 'roles' in user:
+            user.__delitem__("roles") 
         try:
             for i in self.views.keys():
                 #print(i)
                 if 'search' not in i:
                     self.views[i].model.load_data(user,re=True)
+                    self.views[i].setDelegates()
         except Exception as e:
             print(e,"error"*10)
  

@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt,pyqtSlot,QDate
-from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton,QStyledItemDelegate,QStyleOptionViewItem
+from PyQt5.QtWidgets import QHeaderView,QItemDelegate,QComboBox,QCheckBox,QDateEdit,QTextEdit,QLineEdit,QSpinBox,QPushButton,QStyledItemDelegate,QStyleOptionViewItem,QListWidget
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPalette
 import time
@@ -89,6 +89,22 @@ class SpinBoxDelegate(QItemDelegate):
     @pyqtSlot()
     def currentIndexChanged(self):
         self.commitData.emit(self.sender())
+
+class ListEditDelegate(QStyledItemDelegate):
+    def __init__(self,parent):
+        QStyledItemDelegate.__init__(self,parent)
+
+    def createEditor(self,parent,option,index):
+        pass
+
+    def setEditorData(self,editor,index):
+        pass
+    def setModelData(self,editor,model,index):
+        pass
+
+    @pyqtSlot()
+    def currentIndexChanged(self):
+        self.commitData.emit(self.sender())        
  
 class TextEditDelegate(QStyledItemDelegate):
     def __init__(self,parent,password=False):

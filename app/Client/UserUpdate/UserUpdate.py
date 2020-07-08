@@ -19,7 +19,8 @@ class UserUpdate(QWidget):
 
         self.user=user()
         self.user.__delitem__("")
-        
+        self.user.__delitem__("roles")        
+
         self.model=TableModel(item=self.user,ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['id'])
         widget.editor.setModel(self.model)
         prep_table(widget.editor)
@@ -31,8 +32,12 @@ class UserUpdate(QWidget):
         widget.save.setIcon(QIcon.fromTheme("document-save"))
 
     def setDelegates(self):
+        self.widget.editor.reset()
+        self.widget.editor.setModel(self.model)
+        if 'roles' in self.model.item.keys():
+            self.model.item.__delitem__("roles")
         for num,k in enumerate(self.model.item.keys()):
-            print(k)
+            print(k,"update user",num)
             if k == 'active':
                 self.widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(self.widget,state=self.model.item.get(k)))
             elif k == 'password':
@@ -40,8 +45,13 @@ class UserUpdate(QWidget):
             elif k == 'phone':
                 self.widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(self.widget))
             elif k == 'roles':
-                pass
+                #pass
                 #need a model delegate to handle listed objects
+                #need to remove delegates from tableview
+                #from PyQt5.QtWidgets import QTableView
+                #QTableView.reset
+                #self.widget.editor.setItemDelegateForRow(num,ComboBoxDelegateDict(self.widget))
+                pass
             else:
                 self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget))
 
