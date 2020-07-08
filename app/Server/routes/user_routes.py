@@ -8,6 +8,7 @@ import os,sys
 import json as Json
 from .. import status,delete,ccj,status_codes
 from ..messages import messages
+from sqlalchemy.orm.attributes import flag_modified
 
 @app.route("/user/delete/<user_id>",methods=["delete"])
 @auth.login_required
@@ -77,10 +78,6 @@ def alter_user(ID):
     #assert admin != None
     if not admin:
         return messages.ENTITY_DOES_NOT_EXIST_USER.value
-    #assert admin.admin != False
-    if not admin.admin:
-        return messages.NOT_ADMIN.value
-
     USER=db.session.query(User).filter_by(id=ID).first()
     #assert USER != None
     if not USER:
@@ -88,12 +85,17 @@ def alter_user(ID):
 
     #update fields
     for key in USER.defaultdict().keys():
-        if json.get(key) != None:
+        if json.get(key) != None:            
             field=json.get(key)
             if field != USER:
-                USER.__dict__[key]=field
-                #flag modified fields
-                flag_modified(USER,key)
+                if key in ['role','roles']:
+                    USER.__dict__[key].clear()
+                    USER.__dict__[key].extend([field[i] for i in field.keys())
+                else:
+                    USER.__dict__[key]=field
+                    #flag modified fields
+                    flag_modified(USER,key)
+
     #ensure password is hashed
     USER.hash_password_auto()
     #commit the data

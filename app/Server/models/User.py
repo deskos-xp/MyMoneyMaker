@@ -63,6 +63,18 @@ class User(db.Model):
             active=self.active,
             password=self.password  
         ))
+    def defaultdict(self):
+        return dict(
+            id=self.id,
+            roles=self.roles,
+            uname=self.uname,
+            fname=self.fname,
+            mname=self.mname,
+            lname=self.lname,
+            email=self.email,
+            active=self.active,
+            password=self.password  
+        )
 
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:

@@ -19,11 +19,12 @@ class PhoneTextEditDelegate(QItemDelegate):
             except Exception as e:
                 print(e)
         date.textChanged.connect(formatter)
+        date.setText(index.model().data(index))
         return date
 
     def setEditorData(self,editor,index):
         editor.blockSignals(True)
-        #editor.setText(index.model().data(index)) 
+        editor.setText(index.model().data(index)) 
         editor.setText(self.formatted)
         editor.blockSignals(False)
 

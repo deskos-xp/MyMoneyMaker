@@ -27,7 +27,7 @@ class UserSearch(QWidget):
         self.u['page']=0
         self.u['limit']=15
 
-        self.model_table=TableModel(item=deepcopy(self.u))
+        self.model_table=TableModel(item=deepcopy(self.u),ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['password'])
         widget.editor.setModel(self.model_table)
         prep_table(widget.editor)
 
@@ -36,6 +36,8 @@ class UserSearch(QWidget):
                 widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(widget))
             elif key.lower() == "email":
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget))
+            elif key.lower() == 'phone':
+                widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(widget))
             elif key.lower() == "password":
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget,password=True))
             elif key.lower() in ["id","page","limit"]:

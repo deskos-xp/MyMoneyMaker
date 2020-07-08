@@ -8,15 +8,17 @@ from .default_fields import *
 class TableModelEnum(enum.Enum):
     READONLY=False
     EDITABLE=True
+    READONLY_FIELDS=enum.auto()
 
 class TableModel(QAbstractTableModel):
-    def __init__(self,*args,item=None,ReadOnly=TableModelEnum.EDITABLE,**kwargs):
+    def __init__(self,*args,item=None,ReadOnly=TableModelEnum.EDITABLE,ReadOnlyFields=[],**kwargs):
         super(TableModel,self).__init__()
         self.item = item or {}
         self.row_count=0
         self.column_count=2
          
         self.ReadOnly=ReadOnly
+        self.ReadOnlyFields=ReadOnlyFields
 
         self.align=[]
         self.init_align()
@@ -67,8 +69,13 @@ class TableModel(QAbstractTableModel):
         if index.column() > 0:
             if self.ReadOnly == TableModelEnum.READONLY:
                 return baseflags
+            elif self.ReadOnly == TableModelEnum.READONLY_FIELDS:
+                if self.fields[index.row()] in self.ReadOnlyFields:
+                    return baseflags
+                else:
+                    return baseflags | Qt.ItemIsEditable
             else:
-                if self.fields[index.row()] == ['id','user_id']:
+                if self.fields[index.row()] in ['id','user_id']:
                     return baseflags
                 return baseflags | Qt.ItemIsEditable
         else:

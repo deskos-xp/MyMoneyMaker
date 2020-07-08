@@ -60,7 +60,7 @@ class UserDialog(QDialog):
     def before_loadUis(self):
         w=['update','new','search','delete','review']
         for num,i in enumerate(w):
-            if i not in ['search','review']:
+            if i not in ['search','review','update']:
                 continue
             self.names.append("{}_user_widget".format(i))
 
