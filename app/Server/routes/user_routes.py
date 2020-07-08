@@ -80,40 +80,47 @@ def alter_user(ID):
         return messages.ENTITY_DOES_NOT_EXIST_USER.value
     USER=db.session.query(User).filter_by(id=ID).first()
     #assert USER != None
+    print(ID)
     if not USER:
         return messages.ENTITY_DOES_NOT_EXIST_USER.value
 
-    #update fields
-    for key in USER.defaultdict().keys():
-        if json.get(key) != None:            
-            field=json.get(key)
-            if field != USER:
-                if key in ['role','roles']:
-                    USER.__dict__[key].clear()
-                    USER.__dict__[key].extend([field[i] for i in field.keys())
-                else:
-                    USER.__dict__[key]=field
-                    #flag modified fields
-                    flag_modified(USER,key)
-
-    #ensure password is hashed
-    USER.hash_password_auto()
-    #commit the data
+    if 'role' in json.keys():
+        json.__delitem__('role')
+    if 'roles' in json.keys():
+        json.__delitem__('roles')
+    j=jsonToDict(json)
+    for k in j.keys():
+        if k not in ['roles','role']:
+            USER.__dict__[k]=j.get(k)
+            flag_modified(USER,k)
+        else:
+            USER.__dict__['roles'].clear()
+            USER.__dict__['roles'].append(j.get(k))
+            flag_modified(USER,'roles')
+    #USER.lname=json.get("lname")
     db.session.merge(USER)
     db.session.flush()
     db.session.commit()
     return status(User(),status=status_codes.UPDATED)
 
+
+def jsonToDict(json) -> dict:
+    d=dict()
+    for key in json.keys():
+        d[key]=json.get(key)
+    return d
+
+
 if Config().NEED_ADMIN == True:
     #if os.environ['NEED_ADMIN'] == "True":
     @app.route("/admin/new",methods=["get"])
     def new_admin():
-        if os.environ['NEED_ADMIN'] == "True":
-            result=default_user()
-            if result[1] == 200:
-                return status(User(),status=status_codes.NEW,msg="admin created! please set need_admin to false and restart server!")
-            else:
-                return status(User(),status=status_codes.OLD,msg=result[0])
+        #if os.environ['NEED_ADMIN'] == "True":
+        result=default_user()
+        if result[1] == 200:
+            return status(User(),status=status_codes.NEW,msg="admin created! please set need_admin to false and restart server!")
+        else:
+            return status(User(),status=status_codes.OLD,msg=result[0])
 @app.route("/user/new",methods=["post"])
 @auth.login_required
 @roles_required(roles=['admin'])

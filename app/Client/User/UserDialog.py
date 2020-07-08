@@ -38,15 +38,18 @@ class UserDialog(QDialog):
         self.dialog.show()
 
     def hasUser(self,user):
-        print(user)
+        print(self.names)
+        
         try:
             for i in self.views.keys():
+                #print(i)
                 if 'search' not in i:
                     self.views[i].model.load_data(user,re=True)
         except Exception as e:
             print(e,"error"*10)
  
     def prep_ui(self,name):
+        print(name+" prep_ui")
         self.widgets[name]=getattr(self.dialog,name)
         try:
             uic.loadUi("Client/MainWindow/forms/{ii}.ui".format(**dict(ii=name)),self.widgets[name])
@@ -55,7 +58,7 @@ class UserDialog(QDialog):
             if 'search' in name:
                 self.views[name].userSelected.connect(self.hasUser)
         except Exception as e:
-            print(e,"error "*10)
+            print(e,"error pre_ui()"*10)
 
     def before_loadUis(self):
         w=['update','new','search','delete','review']
@@ -67,3 +70,4 @@ class UserDialog(QDialog):
     def loadUis(self):
         for i in self.names:
             self.prep_ui(i)
+        #print(self.names)

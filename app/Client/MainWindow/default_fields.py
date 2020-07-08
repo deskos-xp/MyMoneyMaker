@@ -29,6 +29,9 @@ def currency_lst():
 def currency_mx():
     return dict(pennies=0.01,nickels=0.05,dimes=0.1,quarters=0.25,dollar=1,dollar5=5,dollar10=10,dollar20=20,dollar50=50,dollar100=100)
 
+
+default_password="x"*5
+
 def emails():
     return ['MESSAGING_EMAIL','email','USER_EMAIL_SENDER_EMAIL ']
 

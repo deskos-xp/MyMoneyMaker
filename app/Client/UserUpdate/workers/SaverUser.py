@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
 import os,sys,json,requests
-
+from ...MainWindow.default_fields import *
 
 class SaveUserSignals(QObject):
     killMe:bool=False
@@ -28,6 +28,9 @@ class SaveUser(QRunnable):
                     self.auth.get("uname"),
                     self.auth.get("password")
                     )
+            if self.user.get("password") == default_password:
+                self.user.__delitem__("password")
+            #print(self.user)
             response=self.signals.session.post(addr,auth=auth,json=self.user)
             self.signals.hasResponse.emit(response)
         except Exception as e:

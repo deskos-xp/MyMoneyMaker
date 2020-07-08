@@ -42,6 +42,9 @@ class UserSearch(QWidget):
                 widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget,password=True))
             elif key.lower() in ["id","page","limit"]:
                 widget.editor.setItemDelegateForRow(num,SpinBoxDelegate(widget))
+            elif key == "roles":
+                pass
+                #need a model delegate for listed objects
             else:
                 widget.editor.setItemDelegateForRow(num,LineEditDelegate(widget))
 

@@ -23,21 +23,28 @@ class UserUpdate(QWidget):
         self.model=TableModel(item=self.user,ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['id'])
         widget.editor.setModel(self.model)
         prep_table(widget.editor)
-        for num,k in enumerate(self.model.item.keys()):
-            print(k)
-            if k == 'active':
-                widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(widget,state=self.model.item.get(k)))
-            elif k == 'password':
-                widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget,password=True))
-            elif k == 'phone':
-                widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(widget))
-            else:
-                widget.editor.setItemDelegateForRow(num,TextEditDelegate(widget))
+        self.setDelegates()
         widget.clear.clicked.connect(self.refreshUser)
         widget.clear.setIcon(QIcon.fromTheme("delete_table"))
 
         widget.save.clicked.connect(self.updateUser)
         widget.save.setIcon(QIcon.fromTheme("document-save"))
+
+    def setDelegates(self):
+        for num,k in enumerate(self.model.item.keys()):
+            print(k)
+            if k == 'active':
+                self.widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(self.widget,state=self.model.item.get(k)))
+            elif k == 'password':
+                self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget,password=True))
+            elif k == 'phone':
+                self.widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(self.widget))
+            elif k == 'roles':
+                pass
+                #need a model delegate to handle listed objects
+            else:
+                self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget))
+
 
     def updateUser(self,state):
         try:
@@ -58,6 +65,7 @@ class UserUpdate(QWidget):
         self.refresher.signals.hasError.connect(lambda x:print(x,"error"))
         self.refresher.signals.hasUser.connect(self.refreshUserData)
         QThreadPool.globalInstance().start(self.refresher)
+        self.setDelegates()
 
     def refreshUserData(self,user):
         self.model.load_data(user,re=True)

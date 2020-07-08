@@ -121,20 +121,38 @@ class TextEditDelegate(QStyledItemDelegate):
             self.paint=paint
 
     def createEditor(self,parent,option,index):
+        t=index.model().data(index)
+        if isinstance(t,list):
+            t=t[0]
+        if isinstance(t,dict):
+            t=t.get("name")
+
         if self.password == False:
             date=QTextEdit(parent)
         else:
             date=QLineEdit(parent)
             date.setEchoMode(QLineEdit.PasswordEchoOnEdit)
-                
+        date.setText(t)                
         return date
 
     def setEditorData(self,editor,index):
         editor.blockSignals(True)
-        editor.setText(index.model().data(index))        
+        t=index.model().data(index)
+        if isinstance(t,list):
+            t=t[0]
+        if isinstance(t,dict):
+            t=t.get("name")
+        editor.setText(t)        
         editor.blockSignals(False)
 
     def setModelData(self,editor,model,index):
+        '''
+        t=index.model().data(index)
+        if isinstance(t,list):
+            t=t[0]
+        if isinstance(t,dict):
+            t=t.get("name")
+        '''
         if self.password == False:
             model.setData(index,editor.toPlainText(),Qt.EditRole)
         else:
