@@ -19,3 +19,8 @@ in both server and client do
 	if uid == 0 use config in /opt/MyMoneyMaker
 	else use config in $HOME/.cache/{server,client}_config.json 
 luckily only server config needs to be worked on
+
+
+
+
+when user logs outs, all internal models and displays need to be cleared of user data ---

@@ -145,6 +145,7 @@ class TextEditDelegate(QStyledItemDelegate):
 
         if self.password == False:
             date=QTextEdit(parent)
+            date.setTabChangesFocus(True)
         else:
             date=QLineEdit(parent)
             date.setEchoMode(QLineEdit.PasswordEchoOnEdit)

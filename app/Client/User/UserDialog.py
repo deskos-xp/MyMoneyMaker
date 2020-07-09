@@ -44,7 +44,7 @@ class UserDialog(QDialog):
         try:
             for i in self.views.keys():
                 #print(i)
-                if 'search' not in i:
+                if i.split('_')[0] not in ['search','new']:
                     self.views[i].model.load_data(user,re=True)
                     self.views[i].setDelegates()
         except Exception as e:
@@ -65,11 +65,11 @@ class UserDialog(QDialog):
     def before_loadUis(self):
         w=['update','new','search','delete','review']
         for num,i in enumerate(w):
-            if i not in ['search','review','update']:
+            if i not in ['search','review','update','new']:
                 continue
             self.names.append("{}_user_widget".format(i))
 
     def loadUis(self):
         for i in self.names:
             self.prep_ui(i)
-        #print(self.names)
+#print(self.names)
