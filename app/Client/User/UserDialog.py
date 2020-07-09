@@ -39,8 +39,6 @@ class UserDialog(QDialog):
 
     def hasUser(self,user):
         print(self.names)
-        if 'roles' in user:
-            user.__delitem__("roles") 
         try:
             for i in self.views.keys():
                 #print(i)
@@ -56,7 +54,9 @@ class UserDialog(QDialog):
         try:
             uic.loadUi("Client/MainWindow/forms/{ii}.ui".format(**dict(ii=name)),self.widgets[name])
             #self.views[w[num]]=inst[num](self.auth,self,x,w[num])
+            #print("3$#",name)
             self.views[name]=inst.__dict__.get(name).value(self.auth,self,self.widgets[name],name)
+            #print("3$#")
             if 'search' in name:
                 self.views[name].userSelected.connect(self.hasUser)
         except Exception as e:

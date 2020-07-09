@@ -19,7 +19,7 @@ class UserUpdate(QWidget):
 
         self.user=user()
         self.user.__delitem__("")
-        self.user.__delitem__("roles")        
+        #self.user.__delitem__("role")        
 
         self.model=TableModel(item=self.user,ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['id'])
         widget.editor.setModel(self.model)
@@ -34,8 +34,8 @@ class UserUpdate(QWidget):
     def setDelegates(self):
         self.widget.editor.reset()
         self.widget.editor.setModel(self.model)
-        if 'roles' in self.model.item.keys():
-            self.model.item.__delitem__("roles")
+        #if 'role' in self.model.item.keys():
+        #    self.model.item.__delitem__("role")
         for num,k in enumerate(self.model.item.keys()):
             print(k,"update user",num)
             if k == 'active':
@@ -44,7 +44,7 @@ class UserUpdate(QWidget):
                 self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget,password=True))
             elif k == 'phone':
                 self.widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(self.widget))
-            elif k == 'roles':
+            elif k == 'role':
                 #pass
                 #need a model delegate to handle listed objects
                 #need to remove delegates from tableview

@@ -23,7 +23,7 @@ class UserSearch(QWidget):
 
         print(name)
         
-        self.u= {i:user()[i] for i in user().keys() if i not in  ["","roles"]}       
+        self.u= {i:user()[i] for i in user().keys() if i not in  [""]}       
         self.u['page']=0
         self.u['limit']=15
         

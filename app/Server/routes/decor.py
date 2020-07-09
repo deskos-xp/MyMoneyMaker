@@ -1,16 +1,17 @@
 from ..models.User import auth,db,User,UserSchema
 from flask import session 
+
 def roles_required(roles:list,**arguments):
     def decorator(function):
         def Wrapper(*args,**kargs):
             #roles=arguments.get("roles")
             uname=auth.username()
             user=db.session.query(User).filter_by(uname=uname).first()
-            print(user.roles)
+            print(user.role)
             authorized=False
             for i in roles:
-                for ii in user.roles:
-                    if ii.name == i:
+                #for ii in user.roles:
+                if user.role == i:
                         authorized=True
                         break
             else:

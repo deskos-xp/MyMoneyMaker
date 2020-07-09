@@ -50,5 +50,5 @@ def currency():
         date=time.strftime("%m/%d/%Y",time.localtime())
     )
 def user():
-    return {'active': True, 'email': '', 'fname': '', 'id': -1, 'lname': '', 'mname': '', 'password': '', '': '', 'roles': [], 'uname': '', 'host': 'http://localhost:9090','phone':'(555) 854-4057'}
+    return {'active': True, 'email': '', 'fname': '', 'id': -1, 'lname': '', 'mname': '', 'password': '', '': '', 'roles': [], 'uname': '', 'host': 'http://localhost:9090','phone':'(555) 854-4057','role':"admin"}
 
