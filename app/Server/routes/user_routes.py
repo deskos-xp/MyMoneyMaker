@@ -16,6 +16,9 @@ from sqlalchemy.orm.attributes import flag_modified
 def delete_user(user_id):
     if not user_id:
         return "no user id provided",401
+    print(user_id,"server user id")
+    USER=db.session.query(User).filter_by(id=user_id).delete()
+    db.session.commit()
     return "delete user pending"
 
 @auth.verify_password
