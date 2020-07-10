@@ -23,4 +23,4 @@ luckily only server config needs to be worked on
 
 
 
-when user logs outs, all internal models and displays need to be cleared of user data ---
+when user logs outs, all internal models and displays need to be cleared of user data -- [done]-
