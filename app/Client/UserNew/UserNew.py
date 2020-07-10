@@ -17,9 +17,6 @@ class UserNew:
 
         self.user=user()
         self.user.__delitem__("")
-        self.user['roles']="user"
-        #self.user.__delitem__("roles")
-
         self.model=TableModel(item=deepcopy(self.user),ReadOnly=TableModelEnum.READONLY_FIELDS,ReadOnlyFields=['id'])
         widget.editor.setModel(self.model)
         prep_table(widget.editor)
@@ -56,7 +53,7 @@ class UserNew:
                 self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget,password=True))
             elif k == 'phone':
                 self.widget.editor.setItemDelegateForRow(num,PhoneTextEditDelegate(self.widget))
-            elif k == 'roles':
+            elif k == 'role':
                 self.widget.editor.setItemDelegateForRow(num,ComboBoxDelegate(self.widget,values=['admin','user']))
             else:
                 self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget))

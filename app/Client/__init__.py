@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .About.workers.readAbout import readAbout
 from .Update.Update import Update
+from .MainWindow.default_fields import *
 
 class Main(QMainWindow):
     def __init__(self,**kwargs):
@@ -28,7 +29,9 @@ class Main(QMainWindow):
             for i in self.stacks.keys():
                 if i != "login":
                     self.stacks[i].auth=var
-
+                if i == "charting":
+                    self.stacks[i].clearGraph()
+                    self.stacks[i].rechart()
         self.stacks['login'].signals.hasUser.connect(store)
 
         self.stacks['reviewlast']=Review(self.stacks['login'].user,self)

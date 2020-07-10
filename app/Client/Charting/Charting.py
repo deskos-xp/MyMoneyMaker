@@ -23,8 +23,11 @@ class Charting(QWidget):
         parent.charting.refresh.setIcon(QIcon.fromTheme("refreshstructure"))
         parent.tabWidget.currentChanged.connect(self.rechart)
         parent.charting.refresh.click()
+        parent.charting.clear.clicked.connect(self.clearGraph)
+        parent.charting.clear.hide()
 
     def parseEntries(self,entries):
+        print(entries)
         e=entries.get("status")
         d=entries.get(e)
         self.x=currency_lst()
@@ -64,6 +67,9 @@ class Charting(QWidget):
                 self.plot(self.x.get(i),self.y.get(i),update=True,name=i)
         self.plot(self.x.get("total"),self.y.get("total"),update=True)
 
+    def clearGraph(self):
+        self.parseEntries(dict(status="objects",objects=[currency_ut()]))
+
     def buildWorker(self):
         self.worker=getEntries(self.auth)
         self.worker.signals.finished.connect(lambda:print("finished getting values"))
@@ -97,7 +103,7 @@ class Charting(QWidget):
         else:
             try:
                 n="graph_{name}".format(**dict(name=name))
-                getattr(self.parent.charting,n).plot(x,y,pen=(1,3))
+                getattr(self.parent.charting,n).plot(x,y,pen=(1,3),clear=True)
             except Exception as e:
                 print(e)
 

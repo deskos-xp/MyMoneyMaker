@@ -3,6 +3,7 @@ from ..ServerSettings.ServerSettings import ServerSettings
 import getpass
 from ..User.UserDialog import UserDialog
 from PyQt5.QtGui import QIcon
+from ..MainWindow.default_fields import * 
 
 class MenuBar:
     def __init__(self,parent):
@@ -36,6 +37,20 @@ class MenuBar:
         self.parent.auth=dict()
         
         self.parent.stacks['login'].cachedUser()
+        for stack in self.parent.stacks.keys():
+            if stack == "Charting":
+                for i in self.parent.stacks[stack].y.keys():
+                    self.parent.stacks[stack].y[i].clear()
+                for i in self.parent.stacks[stack].x.keys():
+                    self.parent.stacks[stack].x[i].clear()
+                self.parent.stacks[stack].rechart()
+                
+            elif stack in ['newEntry',"reviewlast","update"]:
+                if stack != "update":
+                    self.parent.stacks[stack].model.load_data(currency(),re=True)
+                if stack == "update":
+                    self.parent.stacks[stack].resultsModel.items.clear()
+                    self.parent.stacks[stack].resultsModel.layoutChanged.emit()
         #self.parent.username.setText("")
         #self.parent.password.setText("")
 
