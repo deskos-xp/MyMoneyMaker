@@ -26,7 +26,7 @@ class UserReview(QWidget):
         widget.refresh.setIcon(QIcon.fromTheme("refreshstructure"))
 
     def requestRefresh(self,state):
-        print(self.auth,"AUTH")
+        #print(self.auth,"AUTH")
         self.refreshUser=RefreshUser(self.auth,self.model.item.get("id"))
         self.refreshUser.signals.finished.connect(lambda:print("finished refreshing user"))
         self.refreshUser.signals.hasError.connect(lambda x:print(x,"error"))

@@ -27,7 +27,7 @@ class Charting(QWidget):
         parent.charting.clear.hide()
 
     def parseEntries(self,entries):
-        print(entries)
+        #print(entries)
         e=entries.get("status")
         d=entries.get(e)
         self.x=currency_lst()

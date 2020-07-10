@@ -13,7 +13,7 @@ class Review(QWidget):
         self.parent=parent
         
         self.auth=parent.user
-        print(self.auth,"auth "*10)
+        #print(self.auth,"auth "*10)
         super(Review,self).__init__()
         
         uic.loadUi("Client/MainWindow/forms/review.ui",parent.review)
@@ -62,7 +62,7 @@ class Review(QWidget):
         self.model.load_data(data.get(d),re=True)
 
     def builderReview(self):
-        print(self.auth)
+        #print(self.auth)
         self.reviewLast=ReviewLast(self.auth)
         self.reviewLast.signals.finished.connect(lambda: print("finished getting review from server"))
         self.reviewLast.signals.hasResponse.connect(lambda x:print(x))

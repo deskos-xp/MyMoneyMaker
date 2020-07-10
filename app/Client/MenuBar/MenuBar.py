@@ -55,7 +55,7 @@ class MenuBar:
         #self.parent.password.setText("")
 
     def lock_action_logout(self,index):
-        print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
+        #print(self.parent.stackedWidget.currentIndex(),"logged in"*10)        
         ind=self.parent.stackedWidget.indexOf(self.parent.loggedIn)
         state=self.parent.stackedWidget.currentIndex() == ind
 

@@ -56,7 +56,7 @@ class NewEntry(QWidget):
 
 
     def preview_before_commit(self):
-        print("preview being called!")
+        #print("preview being called!")
         def message():
             print("user rejected changes")
         preview=Preview(self,self.model.item)

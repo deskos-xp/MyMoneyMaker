@@ -37,7 +37,7 @@ class UserUpdate(QWidget):
         #if 'role' in self.model.item.keys():
         #    self.model.item.__delitem__("role")
         for num,k in enumerate(self.model.item.keys()):
-            print(k,"update user",num)
+            #print(k,"update user",num)
             if k == 'active':
                 self.widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(self.widget,state=self.model.item.get(k)))
             elif k == 'password':
@@ -50,8 +50,7 @@ class UserUpdate(QWidget):
                 #need to remove delegates from tableview
                 #from PyQt5.QtWidgets import QTableView
                 #QTableView.reset
-                #self.widget.editor.setItemDelegateForRow(num,ComboBoxDelegateDict(self.widget))
-                pass
+                self.widget.editor.setItemDelegateForRow(num,ComboBoxDelegate(self.widget,values=['admin','user']))
             else:
                 self.widget.editor.setItemDelegateForRow(num,TextEditDelegate(self.widget))
 
@@ -66,10 +65,10 @@ class UserUpdate(QWidget):
         except Exception as e:
             print(e)
 
-        print(state)
+        #print(state)
     
     def refreshUser(self,state):
-        print(state)
+        #print(state)
         self.refresher=RefreshUser(self.auth,self.model.item.get("id"))
         self.refresher.signals.finished.connect(lambda:print("finished refreshing user"))
         self.refresher.signals.hasError.connect(lambda x:print(x,"error"))

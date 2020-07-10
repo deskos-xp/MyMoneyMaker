@@ -25,7 +25,7 @@ class About(QDialog):
         
         @pyqtSlot(dict)
         def update_about(data):
-            print(data,"update about"*3)
+            #print(data,"update about"*3)
             self.model.load_data(data,re=True)
             icon=Path("Client/MainWindow") / Path(data.get("logo"))
             self.readIcon=readIcon(icon)

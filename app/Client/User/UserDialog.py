@@ -38,7 +38,7 @@ class UserDialog(QDialog):
         self.dialog.show()
 
     def hasUser(self,user):
-        print(self.names)
+        #print(self.names)
         try:
             for i in self.views.keys():
                 #print(i)
@@ -49,7 +49,7 @@ class UserDialog(QDialog):
             print(e,"error"*10)
  
     def prep_ui(self,name):
-        print(name+" prep_ui")
+        #print(name+" prep_ui")
         self.widgets[name]=getattr(self.dialog,name)
         try:
             uic.loadUi("Client/MainWindow/forms/{ii}.ui".format(**dict(ii=name)),self.widgets[name])

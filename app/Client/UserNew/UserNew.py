@@ -29,7 +29,7 @@ class UserNew:
         widget.save.clicked.connect(self.save)
 
     def save(self,state):
-        print(self.model.item)
+        #print(self.model.item)
         self.saveUser=SaveUser(self.auth,self.model.item)
         self.saveUser.signals.finished.connect(lambda :print("user finished saving"))
         self.saveUser.signals.hasError.connect(lambda x:print(x,"error"))
@@ -46,7 +46,7 @@ class UserNew:
         #if 'roles' in self.model.item.keys():
         #    self.model.item.__delitem__("roles")
         for num,k in enumerate(self.model.item.keys()):
-            print(k,"update user",num)
+            #print(k,"update user",num)
             if k == 'active':
                 self.widget.editor.setItemDelegateForRow(num,CheckBoxDelegate(self.widget,state=self.model.item.get(k)))
             elif k == 'password':

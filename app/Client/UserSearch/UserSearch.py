@@ -67,7 +67,7 @@ class UserSearch(QWidget):
     def searchF(self,state):
         @pyqtSlot(list)
         def Users(users):
-            print(users)
+            #print(users)
             self.model_list.items.clear()
             for u in users:
                 self.model_list.items.append(u)
@@ -79,13 +79,13 @@ class UserSearch(QWidget):
             if self.model_table.item.get(k) != user().get(k) or k in ['page','limit']:
                 f[k]=self.model_table.item.get(k)
         searchUsers=SearchUser(self.auth,f)
-        print(f,"searchF "*10)
+        #print(f,"searchF "*10)
         searchUsers.signals.finished.connect(lambda : print("finished searchUser"))
         searchUsers.signals.hasError.connect(lambda x:print(x,"error"))
         searchUsers.signals.hasResponse.connect(lambda x:print(x,"response"))
         searchUsers.signals.hasUsers.connect(Users)
         QThreadPool.globalInstance().start(searchUsers)
-        print(self.model_table.item,"search btn clicked",sep="\n")
+        #print(self.model_table.item,"search btn clicked",sep="\n")
 
 
 
