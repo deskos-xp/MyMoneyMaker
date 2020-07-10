@@ -5,6 +5,7 @@ from ..MainWindow.ModelDelegates import *
 from ..MainWindow.TableModel import *
 from .workers.DeleteUser import DeleteUser
 
+from PyQt5.QtGui import QIcon
 class UserDelete:
     def __init__(self,auth,parent,widget,name):
         self.auth=auth
@@ -15,8 +16,9 @@ class UserDelete:
         widget.view.setModel(self.model)
         prep_table(widget.view)
         widget.clear.clicked.connect(self.clear_view)
+        widget.clear.setIcon(QIcon.fromTheme("delete-comment"))
         widget.delete_btn.clicked.connect(self.delete_user)
-
+        widget.delete_btn.setIcon(QIcon.fromTheme("delete-table"))
     def clear_view(self,state):
         self.model.load_data(user(),re=True)
 
