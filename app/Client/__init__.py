@@ -24,7 +24,7 @@ class Main(QMainWindow):
         self.stacks=dict()
         self.user=dict()
         self.stacks['login']=Login(self,self.cmdline)
-
+        
         def store(var):
             for i in self.stacks.keys():
                 if i != "login":
@@ -38,8 +38,8 @@ class Main(QMainWindow):
         self.stacks['newEntry']=NewEntry(self)
         self.stacks['charting']=Charting(self)
         self.stacks['update']=Update(self)
-
-        self.menubar=MenuBar(self)
+        self.stacks['menubar']=MenuBar(self)
+        #self.menubar=MenuBar(self)
 
         self.about=readAbout(Path("Client/MainWindow/about.json"))
         self.about.signals.finished.connect(lambda :print("finished reading about"))

@@ -19,6 +19,7 @@ class ServerSettings(QDialog):
         self.parent=parent
         self.dialog=QDialog(parent)
         uic.loadUi("Client/MainWindow/forms/server_settings.ui",self.dialog)
+        self.dialog.setWindowTitle("Server Settings")
 
         self.conf_reader=readServerConfig(server_config())
         self.conf_reader.signals.finished.connect(lambda : print("finished reading server config"))

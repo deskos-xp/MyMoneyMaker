@@ -17,6 +17,7 @@ class UpdateDialog(QDialog):
 
         self.dialog=QDialog()
         uic.loadUi("Client/MainWindow/forms/update_dialog.ui",self.dialog)
+        self.dialog.setWindowTitle("Update")
         self.model=TableModel(item=data)
         self.dialog.editor.setModel(self.model)
         prep_table(self.dialog.editor)

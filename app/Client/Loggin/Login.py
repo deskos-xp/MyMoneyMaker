@@ -8,7 +8,10 @@ from copy import deepcopy
 from ..MainWindow.default_fields import *
 from PyQt5.QtGui import QIcon
 from urllib.parse import urlparse
-
+from ..About.workers.readAbout import readAbout
+from ..About.workers.readIcon import readIcon
+from pathlib import Path
+from PyQt5.QtGui import QIcon,QPixmap
 class LoginSignals(QObject):
     hasUser:pyqtSignal=pyqtSignal(dict)
 
@@ -31,6 +34,25 @@ class Login:
         self.auth['password']=self.parent.password.text()
         self.auth['host']=self.parent.host.text()
         self.cachedUser()
+        self.aboutconfig()
+
+    def setLogo(self,pixmap):
+        self.parent.logo.setPixmap(pixmap)
+
+    def icon(self,about):
+        path=Path(Path("Client/MainWindow") / Path(about.get("logo")))
+        self.icon_getter=readIcon(path)
+        self.icon_getter.signals.hasError.connect(lambda x:print(x,"error"))
+        self.icon_getter.signals.hasPixmap.connect(self.setLogo)
+        self.icon_getter.signals.finished.connect(lambda: print("finished getting logo"))
+        QThreadPool.globalInstance().start(self.icon_getter)
+
+    def aboutconfig(self):
+        self.aboutconfigVar=readAbout(Path("Client/MainWindow/about.json"))
+        self.aboutconfigVar.signals.hasError.connect(lambda x:print(x,"error"))
+        self.aboutconfigVar.signals.hasAbout.connect(self.icon)
+        self.aboutconfigVar.signals.finished.connect(lambda : print("reading about config"))
+        QThreadPool.globalInstance().start(self.aboutconfigVar)
     
     def cmdline_options(self):
         if self.cmdline != None:

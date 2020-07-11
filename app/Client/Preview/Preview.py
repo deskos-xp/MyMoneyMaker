@@ -10,7 +10,8 @@ class Preview(QDialog):
         super(Preview,self).__init__()
         self.gui=QDialog(parent)
         uic.loadUi("Client/MainWindow/forms/preview.ui",self.gui)
-       
+        self.gui.setWindowTitle("Entry Review")
+ 
         data=deepcopy(data)
         data.__delitem__('id')
  

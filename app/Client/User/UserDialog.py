@@ -29,6 +29,7 @@ class UserDialog(QDialog):
         self.widgets=dict()
         try:
             uic.loadUi("Client/MainWindow/forms/userdialog.ui",self.dialog)
+            self.dialog.setWindowTitle("User")
             self.before_loadUis()
             self.loadUis()
         except Exception as e:

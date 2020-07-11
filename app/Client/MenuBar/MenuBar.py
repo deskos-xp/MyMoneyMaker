@@ -8,6 +8,7 @@ from ..MainWindow.default_fields import *
 class MenuBar:
     def __init__(self,parent):
         self.parent=parent
+        self.auth=user()
         parent.actionLogout.triggered.connect(self.invalidus)
         parent.actionLogout.setIcon(QIcon.fromTheme("lock"))
 
@@ -60,6 +61,8 @@ class MenuBar:
         state=self.parent.stackedWidget.currentIndex() == ind
 
         self.parent.actionLogout.setEnabled(state)
+        if self.auth.get("role") != "admin":
+            state=False
         self.parent.action_Server_Settings.setEnabled(state)
         self.parent.actionUser.setEnabled(state)
 
