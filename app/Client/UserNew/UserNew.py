@@ -32,7 +32,7 @@ class UserNew:
         #print(self.model.item)
         self.saveUser=SaveUser(self.auth,self.model.item)
         self.saveUser.signals.finished.connect(lambda :print("user finished saving"))
-        self.saveUser.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.saveUser.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.saveUser.signals.hasResponse.connect(lambda x:print(x))
         QThreadPool.globalInstance().start(self.saveUser)
 

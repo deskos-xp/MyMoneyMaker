@@ -32,7 +32,7 @@ class About(QDialog):
             self.readIcon.signals.hasBytesIO.connect(lambda x:print(x))
             self.readIcon.signals.hasImage.connect(lambda x:print(x))
             self.readIcon.signals.hasPixmap.connect(self.gui.logo.setPixmap)
-            self.readIcon.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+            self.readIcon.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
             self.readIcon.signals.finished.connect(lambda : print("finished reading icon"))
             QThreadPool.globalInstance().start(self.readIcon)
         

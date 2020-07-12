@@ -66,7 +66,7 @@ class Review(QWidget):
         self.reviewLast=ReviewLast(self.auth)
         self.reviewLast.signals.finished.connect(lambda: print("finished getting review from server"))
         self.reviewLast.signals.hasResponse.connect(lambda x:print(x))
-        self.reviewLast.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.reviewLast.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.reviewLast.signals.hasData.connect(self.hasData)
         QThreadPool.globalInstance().start(self.reviewLast)
         

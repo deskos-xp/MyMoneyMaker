@@ -26,7 +26,7 @@ class UserDelete:
         print(self.model.item.get("id"))
         self.Deleter=DeleteUser(self.auth,self.model.item.get("id"))
         self.Deleter.signals.finished.connect(lambda:print("done deleting user"))
-        self.Deleter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.Deleter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.Deleter.signals.hasResponse.connect(lambda x:print(x,"response"))
         QThreadPool.globalInstance().start(self.Deleter)
         self.clear_view(True)

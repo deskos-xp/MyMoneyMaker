@@ -45,7 +45,8 @@ class Main(QMainWindow):
 
         self.about=readAbout(Path("Client/MainWindow/about.json"))
         self.about.signals.finished.connect(lambda :print("finished reading about"))
-        self.about.signals.hasError.connect(lambda x:QErrorMessage(self).showMessage(str(x)))
+        #not this one
+        self.about.signals.hasError.connect(lambda x:QErrorMessage(self).showMessage(str(x)+__name__))
         QThreadPool.globalInstance().start(self.about)
 
         def update_window(data):

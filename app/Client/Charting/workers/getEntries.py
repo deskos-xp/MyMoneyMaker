@@ -24,17 +24,18 @@ class getEntries(QRunnable):
 
     def run(self):
         try:
-            print(self.auth,"getEntries"*10)
-            addr="{host}/saved/get".format(**self.auth)
-            auth=(
-                    self.auth.get("uname"),
-                    self.auth.get("password")
-                    )
-            response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize),verify=verify(self.auth.get('host'))[0])
-            self.signals.hasResponse.emit(response)
-            if response.json():
-                self.signals.hasEntries.emit(response.json())
-            self.signals.isFinished=True
+            if self.auth:
+                print(self.auth,"getEntries"*10)
+                addr="{host}/saved/get".format(**self.auth)
+                auth=(
+                        self.auth.get("uname"),
+                        self.auth.get("password")
+                        )
+                response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize),verify=verify(self.auth.get('host'))[0])
+                self.signals.hasResponse.emit(response)
+                if response.json():
+                    self.signals.hasEntries.emit(response.json())
+                self.signals.isFinished=True
         except Exception as e:
             self.signals.hasError.emit(e)
         self.signals.finished.emit()

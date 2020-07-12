@@ -64,7 +64,7 @@ class Update(QWidget):
     def search_Worker(self,search_data):
         self.searchWorker=getSavedEntries(self.auth,search_data)
         self.searchWorker.signals.finished.connect(lambda :print("finished getting data"))
-        self.searchWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.searchWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.searchWorker.signals.hasResponse.connect(lambda x:print(x))
         self.searchWorker.signals.hasData.connect(self.store_data)
         QThreadPool.globalInstance().start(self.searchWorker)

@@ -29,7 +29,7 @@ class UserReview(QWidget):
         #print(self.auth,"AUTH")
         self.refreshUser=RefreshUser(self.auth,self.model.item.get("id"))
         self.refreshUser.signals.finished.connect(lambda:print("finished refreshing user"))
-        self.refreshUser.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.refreshUser.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.refreshUser.signals.hasResponse.connect(lambda x:print(x,'response'))
         self.refreshUser.signals.hasUser.connect(self.updateUser)
         QThreadPool.globalInstance().start(self.refreshUser)

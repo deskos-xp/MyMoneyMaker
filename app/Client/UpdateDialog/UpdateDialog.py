@@ -44,7 +44,7 @@ class UpdateDialog(QDialog):
     def commit_changes(self):
         self.commitWorker=commitData(self.auth,self.model.item)
         self.commitWorker.signals.finished.connect(self.updateResults)
-        self.commitWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent()).showMessage(str(x)))
+        self.commitWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent()).showMessage(str(x)+"__name__"))
         self.commitWorker.signals.hasResponse.connect(lambda x:print(x))
 
         QThreadPool.globalInstance().start(self.commitWorker)

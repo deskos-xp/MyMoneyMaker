@@ -42,14 +42,16 @@ class Login:
     def icon(self,about):
         path=Path(Path("Client/MainWindow") / Path(about.get("logo")))
         self.icon_getter=readIcon(path)
-        self.icon_getter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        #not this one
+        self.icon_getter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.icon_getter.signals.hasPixmap.connect(self.setLogo)
         self.icon_getter.signals.finished.connect(lambda: print("finished getting logo"))
         QThreadPool.globalInstance().start(self.icon_getter)
 
     def aboutconfig(self):
         self.aboutconfigVar=readAbout(Path("Client/MainWindow/about.json"))
-        self.aboutconfigVar.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        #not this one
+        self.aboutconfigVar.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.aboutconfigVar.signals.hasAbout.connect(self.icon)
         self.aboutconfigVar.signals.finished.connect(lambda : print("reading about config"))
         QThreadPool.globalInstance().start(self.aboutconfigVar)
@@ -86,7 +88,8 @@ class Login:
                 
             self.cached=Remember(self.parent,Path.home()/Path(".cache")/Path("User.json"))
             self.cached.signals.finished.connect(lambda :print("finished loading user from cache"))
-            self.cached.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+            #not this one
+            self.cached.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
             self.cached.signals.hasUser.connect(hasUser)
             QThreadPool.globalInstance().start(self.cached)
         except Exception as e:
@@ -110,7 +113,8 @@ class Login:
         self.loginWorker=loginWorker(self.auth)
         self.loginWorker.signals.hasUser.connect(self.success)
         self.loginWorker.signals.hasResponse.connect(lambda x:print(x))
-        self.loginWorker.signals.hasError.connect(lambda x: QErrorMessage(self.parent).showMessage(str(x)))
+        #not this one
+        self.loginWorker.signals.hasError.connect(lambda x: QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.loginWorker.signals.finished.connect(lambda:print("finished attempting"))
 
     def success(self,user):

@@ -74,7 +74,7 @@ class Charting(QWidget):
         self.worker=getEntries(self.auth)
         self.worker.signals.finished.connect(lambda:print("finished getting values"))
         self.worker.signals.hasEntries.connect(self.parseEntries)
-        self.worker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        self.worker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         self.worker.signals.hasResponse.connect(lambda x:print(x))
 
     def builderWorker(self):

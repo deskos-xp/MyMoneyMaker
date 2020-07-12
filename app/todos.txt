@@ -9,6 +9,6 @@ in both server and client do
 luckily only server config needs to be worked on
 
 
-add the ability to see errors in statusbar when events occur
+[done]add the ability to see errors in statusbar when events occur
 
-
+server is now https compliant

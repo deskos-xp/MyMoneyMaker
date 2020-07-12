@@ -81,7 +81,7 @@ class UserSearch(QWidget):
         searchUsers=SearchUser(self.auth,f)
         #print(f,"searchF "*10)
         searchUsers.signals.finished.connect(lambda : print("finished searchUser"))
-        searchUsers.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
+        searchUsers.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)+__name__))
         searchUsers.signals.hasResponse.connect(lambda x:print(x,"response"))
         searchUsers.signals.hasUsers.connect(Users)
         QThreadPool.globalInstance().start(searchUsers)
