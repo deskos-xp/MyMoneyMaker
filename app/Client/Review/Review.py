@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget,QPushButton,QLCDNumber
+from PyQt5.QtWidgets import QWidget,QPushButton,QLCDNumber,QErrorMessage
 import os,sys,json,requests
 from .workers.ReviewLast import ReviewLast
 from ..MainWindow.TableModel import TableModel,TableModelEnum
@@ -66,7 +66,7 @@ class Review(QWidget):
         self.reviewLast=ReviewLast(self.auth)
         self.reviewLast.signals.finished.connect(lambda: print("finished getting review from server"))
         self.reviewLast.signals.hasResponse.connect(lambda x:print(x))
-        self.reviewLast.signals.hasError.connect(lambda x:print(x))
+        self.reviewLast.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.reviewLast.signals.hasData.connect(self.hasData)
         QThreadPool.globalInstance().start(self.reviewLast)
         

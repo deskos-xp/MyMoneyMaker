@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget,QErrorMessage
 import os,sys,json,requests
 from PyQt5.QtGui import QIcon
 
@@ -59,7 +59,7 @@ class UserUpdate(QWidget):
         try:
             self.saver=SaveUser(self.auth,self.model.item)
             self.saver.signals.finished.connect(lambda :print("finished saving user updates"))
-            self.saver.signals.hasError.connect(lambda x:print(x,"error"))
+            self.saver.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
             self.saver.signals.hasResponse.connect(lambda x:print(x,'response'))
             QThreadPool.globalInstance().start(self.saver)
         except Exception as e:
@@ -71,7 +71,7 @@ class UserUpdate(QWidget):
         #print(state)
         self.refresher=RefreshUser(self.auth,self.model.item.get("id"))
         self.refresher.signals.finished.connect(lambda:print("finished refreshing user"))
-        self.refresher.signals.hasError.connect(lambda x:print(x,"error"))
+        self.refresher.signals.hasError.connect(lambda x:QErrorMessage().showMessage(str(x)))
         self.refresher.signals.hasUser.connect(self.refreshUserData)
         QThreadPool.globalInstance().start(self.refresher)
         self.setDelegates()

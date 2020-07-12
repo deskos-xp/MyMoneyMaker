@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget,QErrorMessage
 from PyQt5.QtGui import QIcon
 import os,sys,json,requests
 from ..MainWindow.TableModel import TableModel,TableModelEnum
@@ -64,7 +64,7 @@ class Update(QWidget):
     def search_Worker(self,search_data):
         self.searchWorker=getSavedEntries(self.auth,search_data)
         self.searchWorker.signals.finished.connect(lambda :print("finished getting data"))
-        self.searchWorker.signals.hasError.connect(lambda x:print(x,"error"))
+        self.searchWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.searchWorker.signals.hasResponse.connect(lambda x:print(x))
         self.searchWorker.signals.hasData.connect(self.store_data)
         QThreadPool.globalInstance().start(self.searchWorker)

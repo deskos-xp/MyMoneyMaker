@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QRunnable,QObject,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget,QDialog
+from PyQt5.QtWidgets import QWidget,QDialog,QErrorMessage
 from ..MainWindow.default_fields import *
 from ..MainWindow.ListModel import ListModel
 from ..MainWindow.TableModel import *
@@ -81,7 +81,7 @@ class UserSearch(QWidget):
         searchUsers=SearchUser(self.auth,f)
         #print(f,"searchF "*10)
         searchUsers.signals.finished.connect(lambda : print("finished searchUser"))
-        searchUsers.signals.hasError.connect(lambda x:print(x,"error"))
+        searchUsers.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         searchUsers.signals.hasResponse.connect(lambda x:print(x,"response"))
         searchUsers.signals.hasUsers.connect(Users)
         QThreadPool.globalInstance().start(searchUsers)

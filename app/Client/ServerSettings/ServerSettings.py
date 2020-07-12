@@ -1,6 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QDialog,QWidget,QFileDialog
+from PyQt5.QtWidgets import QDialog,QWidget,QFileDialog,QErrorMessage
+
 import os,sys,json
 from pathlib import Path
 
@@ -23,7 +24,7 @@ class ServerSettings(QDialog):
 
         self.conf_reader=readServerConfig(server_config())
         self.conf_reader.signals.finished.connect(lambda : print("finished reading server config"))
-        self.conf_reader.signals.hasError.connect(lambda x:print(x,"error"))
+        self.conf_reader.signals.hasError.connect(lambda x:QErrorMessage(self.paret).showMessage(str(x)))
 
         @pyqtSlot(dict)
         def load(data):
@@ -42,7 +43,7 @@ class ServerSettings(QDialog):
             saver=saveServerConfig(self.dialog,server_config(),self.model.item)
             saver.signals.finished.connect(lambda:print("finished saving server... you need to restart the server"))
             #need a serverNeedsRestart signal
-            saver.signals.hasError.connect(lambda x:print(x,"error"))
+            saver.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
             QThreadPool.globalInstance().start(saver)
             
             print(self.model.item)

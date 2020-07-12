@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject,QThread,QThreadPool,QRunnable,pyqtSlot,pyqtSignal
-from PyQt5.QtWidgets import QDialog,QWidget,QCheckBox,QLineEdit,QTabWidget
+from PyQt5.QtWidgets import QDialog,QWidget,QCheckBox,QLineEdit,QTabWidget,QErrorMessage
 from .workers.loginWorker import loginWorker
 from .RememberMe.Remember import Remember
 from pathlib import Path
@@ -42,14 +42,14 @@ class Login:
     def icon(self,about):
         path=Path(Path("Client/MainWindow") / Path(about.get("logo")))
         self.icon_getter=readIcon(path)
-        self.icon_getter.signals.hasError.connect(lambda x:print(x,"error"))
+        self.icon_getter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.icon_getter.signals.hasPixmap.connect(self.setLogo)
         self.icon_getter.signals.finished.connect(lambda: print("finished getting logo"))
         QThreadPool.globalInstance().start(self.icon_getter)
 
     def aboutconfig(self):
         self.aboutconfigVar=readAbout(Path("Client/MainWindow/about.json"))
-        self.aboutconfigVar.signals.hasError.connect(lambda x:print(x,"error"))
+        self.aboutconfigVar.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.aboutconfigVar.signals.hasAbout.connect(self.icon)
         self.aboutconfigVar.signals.finished.connect(lambda : print("reading about config"))
         QThreadPool.globalInstance().start(self.aboutconfigVar)
@@ -86,7 +86,7 @@ class Login:
                 
             self.cached=Remember(self.parent,Path.home()/Path(".cache")/Path("User.json"))
             self.cached.signals.finished.connect(lambda :print("finished loading user from cache"))
-            self.cached.signals.hasError.connect(lambda x:print(x))
+            self.cached.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
             self.cached.signals.hasUser.connect(hasUser)
             QThreadPool.globalInstance().start(self.cached)
         except Exception as e:
@@ -105,10 +105,12 @@ class Login:
                json.dump(u,fd)
  
     def builderWorker(self):
+        #x=QErrorMessage(self.parent)
+        #x.showMessage(" message")
         self.loginWorker=loginWorker(self.auth)
         self.loginWorker.signals.hasUser.connect(self.success)
         self.loginWorker.signals.hasResponse.connect(lambda x:print(x))
-        self.loginWorker.signals.hasError.connect(lambda x:print(x,"###"))
+        self.loginWorker.signals.hasError.connect(lambda x: QErrorMessage(self.parent).showMessage(str(x)))
         self.loginWorker.signals.finished.connect(lambda:print("finished attempting"))
 
     def success(self,user):

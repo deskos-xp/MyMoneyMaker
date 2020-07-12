@@ -15,7 +15,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
-    <widget class="QTableView" name="editor"/>
+    <widget class="QTableView" name="editor">
+     <property name="toolTip">
+      <string>new user fields</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame">
@@ -34,6 +38,9 @@
           <height>55</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>save the user</string>
+        </property>
         <property name="text">
          <string>Save</string>
         </property>
@@ -46,6 +53,9 @@
           <width>120</width>
           <height>55</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>reset the new user fields</string>
         </property>
         <property name="text">
          <string>Clear</string>

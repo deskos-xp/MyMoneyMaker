@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject,QRunnable,QObject,QThread,QThreadPool
-from PyQt5.QtWidgets import QApplication,QMainWindow
+from PyQt5.QtWidgets import QApplication,QMainWindow,QErrorMessage
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon,QPixmap,QImage
 from .Loggin.Login import Login
@@ -43,7 +43,7 @@ class Main(QMainWindow):
 
         self.about=readAbout(Path("Client/MainWindow/about.json"))
         self.about.signals.finished.connect(lambda :print("finished reading about"))
-        self.about.signals.hasError.connect(lambda x:print(x))
+        self.about.signals.hasError.connect(lambda x:QErrorMessage(self).showMessage(str(x)))
         QThreadPool.globalInstance().start(self.about)
 
         def update_window(data):

@@ -15,7 +15,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTableView" name="view"/>
+    <widget class="QTableView" name="view">
+     <property name="toolTip">
+      <string>user data</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame">
@@ -33,6 +37,9 @@
           <width>150</width>
           <height>55</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>refresh the view</string>
         </property>
         <property name="text">
          <string>Refresh</string>

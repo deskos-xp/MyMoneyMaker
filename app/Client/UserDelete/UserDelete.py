@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QRunnable,QObject,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget,QDialog,QTableView
+from PyQt5.QtWidgets import QWidget,QDialog,QTableView,QErrorMessage
 from ..MainWindow.default_fields import *
 from ..MainWindow.ModelDelegates import *
 from ..MainWindow.TableModel import *
@@ -26,7 +26,7 @@ class UserDelete:
         print(self.model.item.get("id"))
         self.Deleter=DeleteUser(self.auth,self.model.item.get("id"))
         self.Deleter.signals.finished.connect(lambda:print("done deleting user"))
-        self.Deleter.signals.hasError.connect(lambda x:print(x,"error"))
+        self.Deleter.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.Deleter.signals.hasResponse.connect(lambda x:print(x,"response"))
         QThreadPool.globalInstance().start(self.Deleter)
         self.clear_view(True)

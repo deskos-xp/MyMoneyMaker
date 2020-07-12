@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QObject,QThread,QRunnable,QThreadPool,pyqtSlot,pyqtSignal
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog,QErrorMessage
 import os,sys,json,requests
 
 from ..MainWindow.default_fields import *
@@ -43,7 +43,7 @@ class UpdateDialog(QDialog):
     def commit_changes(self):
         self.commitWorker=commitData(self.auth,self.model.item)
         self.commitWorker.signals.finished.connect(self.updateResults)
-        self.commitWorker.signals.hasError.connect(lambda x:print(x,"error"))
+        self.commitWorker.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.commitWorker.signals.hasResponse.connect(lambda x:print(x))
 
         QThreadPool.globalInstance().start(self.commitWorker)

@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget,QErrorMessage
 
 from ..MainWindow.default_fields import *
 from ..MainWindow.ModelDelegates import *
@@ -39,7 +39,7 @@ class NewEntry(QWidget):
         self.workerReview.signals.finished.connect(lambda : print("finished getting data"))
         self.workerReview.signals.hasResponse.connect(lambda x:print(x))
         self.workerReview.signals.hasData.connect(self.prep_data)
-        self.workerReview.signals.hasError.connect(lambda x:print(x))
+        self.workerReview.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         QThreadPool.globalInstance().start(self.workerReview)
 
 
@@ -65,7 +65,7 @@ class NewEntry(QWidget):
 
     def commitTable(self):
         self.workerNew=NewEntryWorker(self.auth,self.model.item)
-        self.workerNew.signals.hasError.connect(lambda x:print(x))
+        self.workerNew.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.workerNew.signals.hasResponse.connect(lambda x:print(x))
         self.workerNew.signals.finished.connect(self.parent.newEntry.clear.click)
         QThreadPool.globalInstance().start(self.workerNew)

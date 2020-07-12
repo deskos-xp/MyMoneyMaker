@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget,QErrorMessage
 import os,sys,json
 from ..MainWindow.default_fields import *
 from ..MainWindow.ModelDelegates import *
@@ -32,7 +32,7 @@ class UserNew:
         #print(self.model.item)
         self.saveUser=SaveUser(self.auth,self.model.item)
         self.saveUser.signals.finished.connect(lambda :print("user finished saving"))
-        self.saveUser.signals.hasError.connect(lambda x:print(x,"error"))
+        self.saveUser.signals.hasError.connect(lambda x:QErrorMessage(self.parent).showMessage(str(x)))
         self.saveUser.signals.hasResponse.connect(lambda x:print(x))
         QThreadPool.globalInstance().start(self.saveUser)
 

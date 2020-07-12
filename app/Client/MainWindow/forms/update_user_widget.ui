@@ -15,7 +15,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTableView" name="editor"/>
+    <widget class="QTableView" name="editor">
+     <property name="toolTip">
+      <string>user to update</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QSplitter" name="splitter">
@@ -23,11 +27,17 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <widget class="QPushButton" name="clear">
+      <property name="toolTip">
+       <string>reset user fields to the old</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
      </widget>
      <widget class="QPushButton" name="save">
+      <property name="toolTip">
+       <string>update user</string>
+      </property>
       <property name="text">
        <string>Save</string>
       </property>

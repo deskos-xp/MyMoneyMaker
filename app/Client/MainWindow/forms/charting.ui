@@ -35,14 +35,17 @@
         <x>0</x>
         <y>0</y>
         <width>873</width>
-        <height>501</height>
+        <height>497</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget">
+         <property name="toolTip">
+          <string>total $100 dollar bills graph</string>
+         </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>10</number>
          </property>
          <widget class="QWidget" name="total">
           <attribute name="title">
@@ -50,7 +53,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph" native="true"/>
+            <widget class="PlotWidget" name="graph" native="true">
+             <property name="toolTip">
+              <string>total dollar amount</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -60,7 +67,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_pennies" native="true"/>
+            <widget class="PlotWidget" name="graph_pennies" native="true">
+             <property name="toolTip">
+              <string>total pennies graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -70,7 +81,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_nickels" native="true"/>
+            <widget class="PlotWidget" name="graph_nickels" native="true">
+             <property name="toolTip">
+              <string>total nickels graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -80,7 +95,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_dimes" native="true"/>
+            <widget class="PlotWidget" name="graph_dimes" native="true">
+             <property name="toolTip">
+              <string>totals dimes graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -90,7 +109,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_quarters" native="true"/>
+            <widget class="PlotWidget" name="graph_quarters" native="true">
+             <property name="toolTip">
+              <string>total quarters</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -100,7 +123,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_dollar" native="true"/>
+            <widget class="PlotWidget" name="graph_dollar" native="true">
+             <property name="toolTip">
+              <string>total $1 dollar bills graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -110,7 +137,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_dollar5" native="true"/>
+            <widget class="PlotWidget" name="graph_dollar5" native="true">
+             <property name="toolTip">
+              <string>total $5 dollar bills graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -120,7 +151,11 @@
           </attribute>
           <layout class="QGridLayout" name="gridLayout_10">
            <item row="0" column="0">
-            <widget class="PlotWidget" name="graph_dollar10" native="true"/>
+            <widget class="PlotWidget" name="graph_dollar10" native="true">
+             <property name="toolTip">
+              <string>total $10 dollar bills graph</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
