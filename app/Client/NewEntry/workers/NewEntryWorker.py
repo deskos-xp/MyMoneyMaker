@@ -33,7 +33,7 @@ class NewEntryWorker(QRunnable):
                 self.auth.get("password")
             )
             print(addr,auth,self.data)
-            response=self.signals.session.post(addr,auth=auth,json=self.data,verify=verify()[0])
+            response=self.signals.session.post(addr,auth=auth,json=self.data,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
         except Exception as e:
             self.signals.hasError.emit(e)

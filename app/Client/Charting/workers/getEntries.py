@@ -30,7 +30,7 @@ class getEntries(QRunnable):
                     self.auth.get("uname"),
                     self.auth.get("password")
                     )
-            response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize),verify=verify()[0])
+            response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize),verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
             if response.json():
                 self.signals.hasEntries.emit(response.json())

@@ -31,7 +31,7 @@ class SaveUser(QRunnable):
             if self.user.get("password") == default_password:
                 self.user.__delitem__("password")
             #print(self.user)
-            response=self.signals.session.post(addr,auth=auth,json=self.user,verify=verify()[0])
+            response=self.signals.session.post(addr,auth=auth,json=self.user,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
         except Exception as e:
             self.signals.hasError.emit(e)

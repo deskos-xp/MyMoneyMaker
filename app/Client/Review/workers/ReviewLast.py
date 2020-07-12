@@ -25,7 +25,7 @@ class ReviewLast(QRunnable):
     def run(self):
         try:
             addr="{host}/saved/get/last".format(**dict(host=self.auth.get("host")))
-            response=self.signals.session.get(addr,auth=(self.auth.get("uname"),self.auth.get("password")),verify=verify()[0])
+            response=self.signals.session.get(addr,auth=(self.auth.get("uname"),self.auth.get("password")),verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
             if response.status_code == 200:
                 data=response.json()

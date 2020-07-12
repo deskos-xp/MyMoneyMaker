@@ -41,7 +41,7 @@ class SearchUser(QRunnable):
             #    if k not in self.fields.keys():
             #        self.fields[k]=SUE.__dict__[k].value.get('value')
             #print(auth,"auth"*10)
-            response=self.signals.session.post(addr,auth=auth,json=self.fields,verify=verify()[0])
+            response=self.signals.session.post(addr,auth=auth,json=self.fields,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
             if response.status_code ==200:
                 j=response.json()

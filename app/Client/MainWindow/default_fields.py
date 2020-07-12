@@ -2,8 +2,12 @@ import json,os,sys,time
 from PyQt5.QtWidgets import QHeaderView
 from pathlib import Path
 
-def verify():
-    return Path("Server/ssl/cert.pem"),Path("Server/ssl/key.pem")
+def verify(addr):
+    print(addr)
+    if "https" in addr.lower():
+        return Path("Server/ssl/cert.pem"),Path("Server/ssl/key.pem")
+    else:
+        return (None,)
 
 
 def prep_table(table):

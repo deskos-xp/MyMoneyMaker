@@ -1,0 +1,1 @@
+uwsgi --https =0,Server/ssl/cert.pem,Server/ssl/key.pem --shared-socket 127.0.0.1:9090 --plugin /usr/lib/uwsgi/python_plugin.so --threads 2 --wsgi-file wsgi.py -b 32768 --pidfile /tmp/mymoneymaker.pid

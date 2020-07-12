@@ -31,7 +31,7 @@ class RefreshUser(QRunnable):
                 self.auth.get("password")
                 )
             addr="{host}/user/get/{id}".format(**dict(host=self.auth.get("host"),id=self.user_id))
-            response=self.signals.session.get(addr,auth=auth,verify=verify[0])
+            response=self.signals.session.get(addr,auth=auth,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
             if response.status_code == 200:
                 j=response.json()

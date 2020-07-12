@@ -21,7 +21,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QDialogButtonBox" name="confirm">
      <property name="toolTip">
       <string>accept/deny the changes</string>
@@ -30,7 +30,14 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Close</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="save">
+     <property name="text">
+      <string>Save</string>
      </property>
     </widget>
    </item>

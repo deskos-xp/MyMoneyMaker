@@ -17,7 +17,9 @@ from .MainWindow.default_fields import *
 class Main(QMainWindow):
     def __init__(self,**kwargs):
         super(Main,self).__init__()
+        
         self.cmdline=kwargs.get("cmdline")
+        print(self.cmdline.options.server_start_config)
         self.server_pid=kwargs.get("server_pid")
         uic.loadUi("Client/MainWindow/forms/main.ui",self)
         self.statusBar().showMessage("server started on pid: {pid}".format(**dict(pid=self.server_pid)))
@@ -56,7 +58,6 @@ class Main(QMainWindow):
         #self.setWindowIcon(QIcon(QPixmap(str(Path("Client/MainWindow/program.png")))))
         print(self.user,"user"*10)
         self.show()
-
 
 def main(**kwargs):
     app=QApplication(sys.argv)

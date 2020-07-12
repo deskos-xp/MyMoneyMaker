@@ -25,7 +25,7 @@ class loginWorker(QRunnable):
         try:
             j=dict(uname=self.auth.get("username"))
             uri="{host}/user/get".format(**dict(host=self.auth.get('host')))
-            response=self.signals.session.post(uri,auth=(self.auth.get("username"),self.auth.get("password")),json=j,verify=verify()[0])
+            response=self.signals.session.post(uri,auth=(self.auth.get("username"),self.auth.get("password")),json=j,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
             Json=response.json()
             stat=Json.get("status")

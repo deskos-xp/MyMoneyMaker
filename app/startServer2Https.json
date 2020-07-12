@@ -1,0 +1,10 @@
+{
+	"cmd":"gunicorn",
+	"certfile":"--certfile",
+	"certfile-arg":"Server/ssl/cert.pem",
+	"keyfile":"--keyfile",
+	"keyfile-arg":"Server/ssl/key.pem",
+	"b":"-b",
+	"b-arg":"127.0.0.1:9090",
+	"exec":"wsgi:application"
+}

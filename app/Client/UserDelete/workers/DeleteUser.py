@@ -29,7 +29,7 @@ class DeleteUser(QRunnable):
                     self.auth.get("uname"),
                     self.auth.get("password")
                     )
-            response=self.signals.session.delete(addr,auth=auth,verify=verify()[0])
+            response=self.signals.session.delete(addr,auth=auth,verify=verify(self.auth.get('host'))[0])
             self.signals.hasResponse.emit(response)
         except Exception as e:
             self.signals.hasError.emit(e)
