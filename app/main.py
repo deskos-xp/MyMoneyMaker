@@ -6,6 +6,7 @@ import json
 import os
 import argparse
 import Parser       
+import signal,psutil
 
 class dummy:
     def __init__(self,**kwargs):
@@ -40,6 +41,16 @@ def read_config(**kwargs):
 def launch_server(**kwargs):
     return subprocess.Popen(read_config(**kwargs),shell=False,universal_newlines=True)
 
+
+def kill_child_processes(parent_pid, sig=signal.SIGTERM):
+    try:
+      parent = psutil.Process(parent_pid)
+    except psutil.NoSuchProcess:
+      return
+    children = parent.children(recursive=True)
+    for process in children:
+      process.send_signal(sig)
+
 p=Parser.parser()
 server=dummy(pid=0)
 if not p.options.no_flask:
@@ -47,6 +58,7 @@ if not p.options.no_flask:
 code=main(server_pid=server.pid,cmdline=p)
 if server.pid not in [None,0,[],{}]:
     print(server.pid)
+    kill_child_processes(server.pid) 
     os.kill(server.pid,9)
 '''
 p=Parser.parser()

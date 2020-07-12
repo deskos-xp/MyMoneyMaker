@@ -1,5 +1,11 @@
 {
 	"cmd":"gunicorn",
+	"workers":"--workers",
+	"number_of_workers":4,
+	"worker_class":"--worker-class",
+	"worker_class_args":"eventlet",
+	"worker_connections":"--worker-connections",
+	"worker_connections_arg":1000,
 	"certfile":"--certfile",
 	"certfile-arg":"Server/ssl/cert.pem",
 	"keyfile":"--keyfile",
