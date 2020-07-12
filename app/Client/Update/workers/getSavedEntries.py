@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QWidget
 import os,sys,requests,json
-
+from ...MainWindow.default_fields import *
 
 class getSavedEntriesSignals(QObject):
     killMe:bool=False
@@ -30,7 +30,7 @@ class getSavedEntries(QRunnable):
                 self.auth.get("uname"),
                 self.auth.get("password")
             )
-            response=self.signals.session.post(addr,json=self.search_data,auth=auth)
+            response=self.signals.session.post(addr,json=self.search_data,auth=auth,verify=verify()[0])
             self.signals.hasResponse.emit(response)
             j=response.json()
             data=j.get("status")

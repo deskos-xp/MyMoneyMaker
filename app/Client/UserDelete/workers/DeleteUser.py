@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
 from PyQt5.QtWidgets import QWidget,QDialog
 import requests,os,sys,json
-
+from ...MainWindow.default_fields import *
 
 class DeleteUserSignals(QObject):
     killMe:bool=False
@@ -29,7 +29,7 @@ class DeleteUser(QRunnable):
                     self.auth.get("uname"),
                     self.auth.get("password")
                     )
-            response=self.signals.session.delete(addr,auth=auth)
+            response=self.signals.session.delete(addr,auth=auth,verify=verify()[0])
             self.signals.hasResponse.emit(response)
         except Exception as e:
             self.signals.hasError.emit(e)

@@ -2,6 +2,7 @@ from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSl
 from PyQt5.QtWidgets import QWidget
 import os,sys,json,requests
 import enum
+from ...MainWindow.default_fields import *
 
 class SUE(enum.Enum):
     limit={'key':'limit','value':10}
@@ -40,7 +41,7 @@ class SearchUser(QRunnable):
             #    if k not in self.fields.keys():
             #        self.fields[k]=SUE.__dict__[k].value.get('value')
             #print(auth,"auth"*10)
-            response=self.signals.session.post(addr,auth=auth,json=self.fields)
+            response=self.signals.session.post(addr,auth=auth,json=self.fields,verify=verify()[0])
             self.signals.hasResponse.emit(response)
             if response.status_code ==200:
                 j=response.json()

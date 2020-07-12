@@ -1,5 +1,11 @@
 import json,os,sys,time
 from PyQt5.QtWidgets import QHeaderView
+from pathlib import Path
+
+def verify():
+    return Path("Server/ssl/cert.pem"),Path("Server/ssl/key.pem")
+
+
 def prep_table(table):
     table.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
     table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

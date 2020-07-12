@@ -24,7 +24,8 @@ class parser:
         self.adjust_flask=self.cmd.add_parser("adjust-flask",help="modify flask settings from cmd")
         self.adjust_flask.add_argument("-P","--port",help="port for flask server",default=9090)
         self.adjust_flask.add_argument("-pro","--protocol",default="http",help="protocol to used on host")
-
+        
+        self.parser.add_argument("-ssc","--server_start_config",default="startServer2.json",help="which server start config to use")
 
 
 

@@ -16,6 +16,9 @@ def read_config(**kwargs):
     cmd={}
     config="startServer.json"
     cmd_opt=kwargs.get("override")
+    if 'server_start_config' in cmd_opt.__dict__.keys():
+        config=cmd_opt.__dict__.get("server_start_config")
+
     total_cmd=[]
     with open(Path(config),"r") as fd:
         cmd=json.load(fd)

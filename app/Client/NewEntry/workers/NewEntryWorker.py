@@ -2,6 +2,7 @@ from PyQt5.QtCore import QObject,QRunnable,QThreadPool,QThread,pyqtSignal,pyqtSl
 from PyQt5.QtWidgets import QWidget
 import os,sys,json,requests
 
+from ...MainWindow.default_fields import *
 
 class NewEntryWorkerSignals(QObject):
     killMe:bool=False
@@ -32,7 +33,7 @@ class NewEntryWorker(QRunnable):
                 self.auth.get("password")
             )
             print(addr,auth,self.data)
-            response=self.signals.session.post(addr,auth=auth,json=self.data)
+            response=self.signals.session.post(addr,auth=auth,json=self.data,verify=verify()[0])
             self.signals.hasResponse.emit(response)
         except Exception as e:
             self.signals.hasError.emit(e)

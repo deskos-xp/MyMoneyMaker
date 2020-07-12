@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
 from PyQt5.QtWidgets import QWidget
-
+from ...MainWindow.default_fields import *
 import os,sys,json,requests
 
 
@@ -31,7 +31,7 @@ class RefreshUser(QRunnable):
                 self.auth.get("password")
                 )
             addr="{host}/user/get/{id}".format(**dict(host=self.auth.get("host"),id=self.user_id))
-            response=self.signals.session.get(addr,auth=auth)
+            response=self.signals.session.get(addr,auth=auth,verify=verify[0])
             self.signals.hasResponse.emit(response)
             if response.status_code == 200:
                 j=response.json()

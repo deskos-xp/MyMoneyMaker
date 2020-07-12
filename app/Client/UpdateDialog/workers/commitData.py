@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
 import os,sys,json,requests
 from PyQt5.QtWidgets import QWidget
+from ...MainWindow.default_fields import *
 
 class commitDataSignals(QObject):
     killMe:bool=False
@@ -23,7 +24,7 @@ class commitData(QRunnable):
 
     def run(self):
         try:
-            addr="{host}/saved/update/{id}".format(**dict(host=self.auth.get('host'),id=self.data.get("id")))
+            addr="{host}/saved/update/{id}".format(**dict(host=self.auth.get('host'),id=self.data.get("id")),verify=verify()[0])
             auth=(
                 self.auth.get("uname"),
                 self.auth.get("password")

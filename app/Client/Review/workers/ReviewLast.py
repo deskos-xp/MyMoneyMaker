@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSignal,pyqtSlot
 from PyQt5.QtWidgets import QWidget
 import os,sys,json,requests,time
+from ...MainWindow.default_fields import *
 
 class ReviewLastSignals(QObject):
     killMe:bool=False
@@ -24,7 +25,7 @@ class ReviewLast(QRunnable):
     def run(self):
         try:
             addr="{host}/saved/get/last".format(**dict(host=self.auth.get("host")))
-            response=self.signals.session.get(addr,auth=(self.auth.get("uname"),self.auth.get("password")))
+            response=self.signals.session.get(addr,auth=(self.auth.get("uname"),self.auth.get("password")),verify=verify()[0])
             self.signals.hasResponse.emit(response)
             if response.status_code == 200:
                 data=response.json()

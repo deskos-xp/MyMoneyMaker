@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QObject,QRunnable,QThread,QThreadPool,pyqtSlot,pyqtSignal
 import os,sys,json,requests
-
+from ...MainWindow.default_fields import *
 class getEntriesSignals(QObject):
     killMe:bool=False
     session:requests.Session=requests.Session()
@@ -30,7 +30,7 @@ class getEntries(QRunnable):
                     self.auth.get("uname"),
                     self.auth.get("password")
                     )
-            response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize))
+            response=self.signals.session.post(addr,auth=auth,json=dict(page=0,limit=sys.maxsize),verify=verify()[0])
             self.signals.hasResponse.emit(response)
             if response.json():
                 self.signals.hasEntries.emit(response.json())
